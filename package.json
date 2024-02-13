@@ -47,6 +47,10 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.204.0",
+    "@aws-cdk/aws-lambda": "^1.204.0",
+    "@aws-cdk/aws-s3": "^1.204.0",
+    "@aws-cdk/core": "^1.204.0",
     "aws-cdk-lib": "^2.1.0",
     "constructs": "^10.0.5"
   },

@@ -1,6 +1,6 @@
 import pytest
 
-from weatherApp-backend.example import hello
+from backend.example import hello
 
 @pytest.mark.parametrize(
     ("name", "expected"),

@@ -15,7 +15,6 @@ const main = new awscdk.AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   name: 'weatherApp',
   packageName: 'weatherApp',
-  outdir: 'src',
   deps: ['@aws-cdk/core', '@aws-cdk/aws-s3', '@aws-cdk/aws-lambda', '@aws-cdk/aws-apigateway'],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -25,26 +24,23 @@ const main = new awscdk.AwsCdkTypeScriptApp({
 
 new ReactTypeScriptProject({
   ...COMMON_PROJEN_SETTINGS,
-  name: 'weatherApp-frontend',
+  name: 'frontend',
   parent: main,
-  deps: ['react', 'react-dom', 'react-scripts', 'react-hook-form', 'axios', 'react-query', 'react-router-dom'],
-  devDeps: [],
   outdir: 'frontend',
-  packageName: 'weatherApp-frontend',
   release: false,
   buildWorkflow: false,
 });
 
 new PythonProject({
   ...COMMON_PROJEN_SETTINGS,
-  moduleName: 'weatherApp-backend',
+  moduleName: 'backend',
   version: '0.1.0',
   venv: true,
   venvOptions: {
     pythonExec: 'python3',
   },
   pytest: true,
-  name: 'weatherApp-backend',
+  name: 'backend',
   parent: main,
   deps: ['fastapi'],
   devDeps: [],
