@@ -1,7 +1,8 @@
 import { App, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
-import { Code, Function, Runtime } from 'aws-cdk-lib/aws-lambda';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 
 export class MyStack extends Stack {
@@ -15,28 +16,20 @@ export class MyStack extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     });
     // Create the Lambda function
-    const lambdaFunction = new Function(this, 'weatherLambda', {
-      functionName: 'weatherLambda',
-      runtime: Runtime.PYTHON_3_12,
-      handler: 'handler.handler',
-      code: Code.fromAsset('backend', {
-        bundling: {
-          platform: 'ARM_64',
-          image: Runtime.PYTHON_3_12.bundlingImage,
-          command: [
-            'bash', '-c',
-            'pip install --no-cache -r requirements.txt -t /asset-output && cp -au . /asset-output',
-          ],
-        },
-      }),
+    const lambdaFunction = new NodejsFunction(this, 'weatherLambda', {
+      entry: require.resolve('./backend/src/index'),
+      runtime: Runtime.NODEJS_18_X,
       environment: {
         TABLE_NAME: table.tableName,
       },
     });
     table.grantReadWriteData(lambdaFunction);
-    new LambdaRestApi(this, 'weatherApi', {
+    const api = new LambdaRestApi(this, 'weatherApi', {
       handler: lambdaFunction,
+      proxy: false,
     });
+    api.root.addResource('getTimeSeries').addMethod('GET');
+    api.root.addResource('setWeather').addMethod('POST');
   }
 }
 
