@@ -17,14 +17,15 @@ export class MyStack extends Stack {
     // Create the Lambda function
     const lambdaFunction = new Function(this, 'weatherLambda', {
       functionName: 'weatherLambda',
-      runtime: Runtime.PYTHON_3_10,
-      handler: 'server.handler',
+      runtime: Runtime.PYTHON_3_12,
+      handler: 'handler.handler',
       code: Code.fromAsset('backend', {
         bundling: {
-          image: Runtime.PYTHON_3_10.bundlingImage,
+          platform: 'ARM_64',
+          image: Runtime.PYTHON_3_12.bundlingImage,
           command: [
             'bash', '-c',
-            'pip install -r requirements.txt -t /asset-output && cp -au . /asset-output',
+            'pip install --no-cache -r requirements.txt -t /asset-output && cp -au . /asset-output',
           ],
         },
       }),
