@@ -12,6 +12,7 @@ export class MyStack extends Stack {
     const table = new Table(this, 'weather', {
       tableName: 'weather',
       partitionKey: { name: 'pk', type: AttributeType.STRING },
+      sortKey: { name: 'sk', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY,
     });
@@ -28,7 +29,7 @@ export class MyStack extends Stack {
       handler: lambdaFunction,
       proxy: false,
     });
-    api.root.addResource('getTimeSeries').addMethod('GET');
+    api.root.addResource('getTimeSeries').addMethod('POST');
     api.root.addResource('setWeather').addMethod('POST');
   }
 }

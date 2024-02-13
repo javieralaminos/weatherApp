@@ -1,9 +1,9 @@
 import { GetTimeSeriesWeatherProps, TimeSeriesResponse, SetWeatherProps } from './schemas';
-import { ForManagingWeather } from '../ports/driven/for-managing-weather';
-import { ForGettingWeather, ForSettingWeather } from '../ports/driver';
+import { ForQueringWeather } from '../ports/driven/for-quering-weather';
+import { ForServingWeather, ForInjestingWeather } from '../ports/driver';
 
-export class StandardApi implements ForGettingWeather, ForSettingWeather {
-  constructor(private forManagingWeather: ForManagingWeather) {
+export class WeatherService implements ForServingWeather, ForInjestingWeather {
+  constructor(private forManagingWeather: ForQueringWeather) {
   }
   public async getTimeSeries(props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
     return this.forManagingWeather.getTimeSeries(props);

@@ -1,13 +1,13 @@
 import { WeatherType } from '../../../models';
 import { GetTimeSeriesWeatherProps, SetWeatherProps, TimeSeriesResponse } from '../../app/schemas';
-import { ForManagingWeather } from '../../ports/driven/for-managing-weather';
+import { ForQueringWeather } from '../../ports/driven/for-quering-weather';
 
-export class WeatherRepositoryStubAdapter implements ForManagingWeather {
+export class WeatherRepositoryStubAdapter implements ForQueringWeather {
   public async getTimeSeries(_props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
     return {
       timeSeries: [
         {
-          timestamp: new Date().getTime(),
+          datetime: '2020-01-01',
           value: 20,
           type: WeatherType.pressure,
         },

@@ -1,8 +1,8 @@
 import { initTRPC } from '@trpc/server';
-import { StandardApi } from '../../app/api';
 import { SetWeatherPropsSchema } from '../../app/schemas';
+import { WeatherService } from '../../app/weatherService';
 
-export function weatherSetterTrpcAdapter(api: StandardApi, t: ReturnType<typeof initTRPC.create>) {
+export function weatherInjestionTrpcAdapter(api: WeatherService, t: ReturnType<typeof initTRPC.create>) {
   return t.router({
     setWeather: t.procedure
       .input(SetWeatherPropsSchema)

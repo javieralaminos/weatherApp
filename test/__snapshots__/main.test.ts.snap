@@ -1,0 +1,556 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot 1`] = `
+{
+  "Outputs": {
+    "weatherApiEndpointE81DFED1": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Ref": "weatherApi3E538EE5",
+            },
+            ".execute-api.",
+            {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            {
+              "Ref": "weatherApiDeploymentStageprod18E11F87",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": {
+    "BootstrapVersion": {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": {
+    "weatherApi3E538EE5": {
+      "Properties": {
+        "Name": "weatherApi",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "weatherApiAccountF4DE3E99": {
+      "DeletionPolicy": "Retain",
+      "DependsOn": [
+        "weatherApi3E538EE5",
+      ],
+      "Properties": {
+        "CloudWatchRoleArn": {
+          "Fn::GetAtt": [
+            "weatherApiCloudWatchRoleD75EAD79",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "weatherApiCloudWatchRoleD75EAD79": {
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+      "UpdateReplacePolicy": "Retain",
+    },
+    "weatherApiDeployment2F8C3A2F6b80b543fd031c90e3c6063635b628ed": {
+      "DependsOn": [
+        "weatherApigetTimeSeriesPOST18B9010E",
+        "weatherApigetTimeSeries37C51F06",
+        "weatherApisetWeatherPOST399B903C",
+        "weatherApisetWeather0EEDBBB7",
+      ],
+      "Properties": {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "weatherApiDeploymentStageprod18E11F87": {
+      "DependsOn": [
+        "weatherApiAccountF4DE3E99",
+      ],
+      "Properties": {
+        "DeploymentId": {
+          "Ref": "weatherApiDeployment2F8C3A2F6b80b543fd031c90e3c6063635b628ed",
+        },
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "weatherApigetTimeSeries37C51F06": {
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "weatherApi3E538EE5",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "getTimeSeries",
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "weatherApigetTimeSeriesPOST18B9010E": {
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "weatherLambda917DAE34",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Ref": "weatherApigetTimeSeries37C51F06",
+        },
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "weatherApigetTimeSeriesPOSTApiPermissionTesttestweatherApi47B8BB81POSTgetTimeSeries99936B16": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "weatherLambda917DAE34",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "weatherApi3E538EE5",
+              },
+              "/test-invoke-stage/POST/getTimeSeries",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "weatherApigetTimeSeriesPOSTApiPermissiontestweatherApi47B8BB81POSTgetTimeSeries3E1177AB": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "weatherLambda917DAE34",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "weatherApi3E538EE5",
+              },
+              "/",
+              {
+                "Ref": "weatherApiDeploymentStageprod18E11F87",
+              },
+              "/POST/getTimeSeries",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "weatherApisetWeather0EEDBBB7": {
+      "Properties": {
+        "ParentId": {
+          "Fn::GetAtt": [
+            "weatherApi3E538EE5",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "setWeather",
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "weatherApisetWeatherPOST399B903C": {
+      "Properties": {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "POST",
+        "Integration": {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                {
+                  "Fn::GetAtt": [
+                    "weatherLambda917DAE34",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": {
+          "Ref": "weatherApisetWeather0EEDBBB7",
+        },
+        "RestApiId": {
+          "Ref": "weatherApi3E538EE5",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "weatherApisetWeatherPOSTApiPermissionTesttestweatherApi47B8BB81POSTsetWeather7FDC2DEB": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "weatherLambda917DAE34",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "weatherApi3E538EE5",
+              },
+              "/test-invoke-stage/POST/setWeather",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "weatherApisetWeatherPOSTApiPermissiontestweatherApi47B8BB81POSTsetWeatherA91FE5BC": {
+      "Properties": {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "weatherLambda917DAE34",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": {
+          "Fn::Join": [
+            "",
+            [
+              "arn:",
+              {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              {
+                "Ref": "weatherApi3E538EE5",
+              },
+              "/",
+              {
+                "Ref": "weatherApiDeploymentStageprod18E11F87",
+              },
+              "/POST/setWeather",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "weatherEDED3DB8": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "pk",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "sk",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "pk",
+            "KeyType": "HASH",
+          },
+          {
+            "AttributeName": "sk",
+            "KeyType": "RANGE",
+          },
+        ],
+        "TableName": "weather",
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "weatherLambda917DAE34": {
+      "DependsOn": [
+        "weatherLambdaServiceRoleDefaultPolicy93F8C041",
+        "weatherLambdaServiceRole1DDF5AA7",
+      ],
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "a752008dd5e902bc24169c727a818dbb196c27fcf2c09c486c5903aad5762e71.zip",
+        },
+        "Environment": {
+          "Variables": {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "TABLE_NAME": {
+              "Ref": "weatherEDED3DB8",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "weatherLambdaServiceRole1DDF5AA7",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs18.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "weatherLambdaServiceRole1DDF5AA7": {
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": [
+          {
+            "Fn::Join": [
+              "",
+              [
+                "arn:",
+                {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "weatherLambdaServiceRoleDefaultPolicy93F8C041": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                {
+                  "Fn::GetAtt": [
+                    "weatherEDED3DB8",
+                    "Arn",
+                  ],
+                },
+                {
+                  "Ref": "AWS::NoValue",
+                },
+              ],
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "weatherLambdaServiceRoleDefaultPolicy93F8C041",
+        "Roles": [
+          {
+            "Ref": "weatherLambdaServiceRole1DDF5AA7",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+  },
+  "Rules": {
+    "CheckBootstrapVersion": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Not": [
+              {
+                "Fn::Contains": [
+                  [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;

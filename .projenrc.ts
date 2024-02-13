@@ -40,6 +40,6 @@ new TypeScriptAppProject({
   outdir: 'src/backend',
   release: false,
   buildWorkflow: false,
-  deps: ['@trpc/server', 'zod'],
+  deps: ['@trpc/server', 'zod', '@aws-sdk/client-dynamodb'],
 });
 main.synth();

@@ -59,6 +59,10 @@
       "type": "build"
     },
     {
+      "name": "@aws-sdk/client-dynamodb",
+      "type": "runtime"
+    },
+    {
       "name": "@trpc/server",
       "type": "runtime"
     },
