@@ -7,6 +7,6 @@ export function weatherServerTrpcAdapter(api: WeatherService, t: ReturnType<type
     getTimeSeries: t.procedure
       .input(GetTimeSeriesWeatherPropsSchema)
       .output(TimeSeriesResponseSchema)
-      .query(({ input }) => api.getTimeSeries(input)),
+      .mutation(({ input }) => api.getTimeSeries(input)),
   });
 }

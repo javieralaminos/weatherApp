@@ -9,8 +9,8 @@ export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
     super(scope, id, props);
 
-    const table = new Table(this, 'weather', {
-      tableName: 'weather',
+    const table = new Table(this, 'weatherTable', {
+      tableName: 'weatherTable',
       partitionKey: { name: 'pk', type: AttributeType.STRING },
       sortKey: { name: 'sk', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
