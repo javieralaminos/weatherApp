@@ -1,5 +1,5 @@
 import { AwsCdkTypeScriptApp } from 'projen/lib/awscdk';
-import { TypeScriptProject } from 'projen/lib/typescript';
+import { TypeScriptAppProject } from 'projen/lib/typescript';
 import { ReactTypeScriptProject } from 'projen/lib/web';
 
 const COMMON_PROJEN_SETTINGS = {
@@ -33,7 +33,7 @@ new ReactTypeScriptProject({
   deps: ['zod'],
 });
 
-new TypeScriptProject({
+new TypeScriptAppProject({
   ...COMMON_PROJEN_SETTINGS,
   name: 'backend',
   parent: main,
