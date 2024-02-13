@@ -389,35 +389,6 @@ exports[`Snapshot 1`] = `
       },
       "Type": "AWS::Lambda::Permission",
     },
-    "weatherEDED3DB8": {
-      "DeletionPolicy": "Delete",
-      "Properties": {
-        "AttributeDefinitions": [
-          {
-            "AttributeName": "pk",
-            "AttributeType": "S",
-          },
-          {
-            "AttributeName": "sk",
-            "AttributeType": "S",
-          },
-        ],
-        "BillingMode": "PAY_PER_REQUEST",
-        "KeySchema": [
-          {
-            "AttributeName": "pk",
-            "KeyType": "HASH",
-          },
-          {
-            "AttributeName": "sk",
-            "KeyType": "RANGE",
-          },
-        ],
-        "TableName": "weather",
-      },
-      "Type": "AWS::DynamoDB::Table",
-      "UpdateReplacePolicy": "Delete",
-    },
     "weatherLambda917DAE34": {
       "DependsOn": [
         "weatherLambdaServiceRoleDefaultPolicy93F8C041",
@@ -428,13 +399,13 @@ exports[`Snapshot 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "a752008dd5e902bc24169c727a818dbb196c27fcf2c09c486c5903aad5762e71.zip",
+          "S3Key": "07cd3eb378ef540dac767f48967b5cbcd3ee3666e505b33cb7e0fc54affb095d.zip",
         },
         "Environment": {
           "Variables": {
             "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "TABLE_NAME": {
-              "Ref": "weatherEDED3DB8",
+              "Ref": "weatherTableA1E8AFCC",
             },
           },
         },
@@ -503,7 +474,7 @@ exports[`Snapshot 1`] = `
               "Resource": [
                 {
                   "Fn::GetAtt": [
-                    "weatherEDED3DB8",
+                    "weatherTableA1E8AFCC",
                     "Arn",
                   ],
                 },
@@ -523,6 +494,35 @@ exports[`Snapshot 1`] = `
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "weatherTableA1E8AFCC": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "AttributeDefinitions": [
+          {
+            "AttributeName": "pk",
+            "AttributeType": "S",
+          },
+          {
+            "AttributeName": "sk",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "KeySchema": [
+          {
+            "AttributeName": "pk",
+            "KeyType": "HASH",
+          },
+          {
+            "AttributeName": "sk",
+            "KeyType": "RANGE",
+          },
+        ],
+        "TableName": "weatherTable",
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
     },
   },
   "Rules": {

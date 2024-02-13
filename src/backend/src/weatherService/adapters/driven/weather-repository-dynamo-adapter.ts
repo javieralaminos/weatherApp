@@ -1,13 +1,15 @@
+import { assert } from 'console';
 import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
 import { WeatherType } from '../../../models';
 import { GetTimeSeriesWeatherProps, SetWeatherProps, TimeSeriesResponse } from '../../app/schemas';
 import { ForQueringWeather } from '../../ports/driven/for-quering-weather';
 
 export class WeatherRepositoryDynamoAdapter implements ForQueringWeather {
-  tableName: string | undefined;
-  private readonly client = new DynamoDBClient({});
+  tableName: string;
+  public readonly client = new DynamoDBClient({});
   constructor() {
-    this.tableName = process.env.TABLE_NAME;
+    assert(process.env.TABLE_NAME, 'TABLE_NAME is not defined');
+    this.tableName = process.env.TABLE_NAME ?? '';
   }
 
 

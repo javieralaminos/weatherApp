@@ -3,18 +3,13 @@ import { GetTimeSeriesWeatherProps, SetWeatherProps, TimeSeriesResponse } from '
 import { ForQueringWeather } from '../../ports/driven/for-quering-weather';
 
 export class WeatherRepositoryStubAdapter implements ForQueringWeather {
+  private readonly data: { datetime: string; value: number; type: WeatherType}[] = [];
   public async getTimeSeries(_props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
     return {
-      timeSeries: [
-        {
-          datetime: '2020-01-01',
-          value: 20,
-          type: WeatherType.pressure,
-        },
-      ],
+      timeSeries: this.data,
     };
   }
   public async setWeather(props: SetWeatherProps): Promise<void> {
-    console.log('WeatherRepositoryStubAdapter.setWeather', props);
+    this.data.push(props);
   }
 }
