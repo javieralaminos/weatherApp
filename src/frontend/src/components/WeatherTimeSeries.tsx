@@ -34,7 +34,7 @@ const TimeSeriesChart: FC = () => {
   };
   const options: Highcharts.Options = {
     title: {
-      text: 'Time Series Chart',
+      text: 'Chart',
     },
     xAxis: {
       type: 'datetime',
