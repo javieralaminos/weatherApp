@@ -12,7 +12,7 @@ function App() {
     <>
       <TrpcProvider apiBaseUrl={'https://bsdne6hzh0.execute-api.eu-west-1.amazonaws.com/prod/'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-
+          <h1>Weather App</h1>
           <p>
             <WeatherIngestion />
           </p>

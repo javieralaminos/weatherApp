@@ -29,7 +29,7 @@ const WeatherIngestion: FunctionComponent = () => {
 
   return (
     <>
-      <h1>Weather Ingestion</h1>
+      <h2>Weather Ingestion</h2>
       <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TextField

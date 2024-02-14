@@ -54,7 +54,7 @@ const TimeSeriesChart: FC = () => {
 
   return (
     <>
-      <h1>Results</h1>
+      <h2>Results</h2>
       <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
       <BasicDateTimePicker selectedDate={endDate} setSelectedDate={setEndDate} />
