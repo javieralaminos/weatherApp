@@ -2,8 +2,9 @@ import { Button } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { FC, useState } from 'react';
+import BasicMenu from './BasicMenu';
 import BasicDateTimePicker from './DateTimePicker';
-import { WeatherType } from './models';
+import { AverageType, WeatherType } from './models';
 import { trpc } from './trpc';
 
 interface TimeSeriesDataResponse {
@@ -15,14 +16,16 @@ interface TimeSeriesDataResponse {
 const TimeSeriesChart: FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [averageType, setAverageType] = useState<string | null>(null);
   const [data, setData] = useState<TimeSeriesDataResponse>({ temperature: [], humidity: [], pressure: [] });
   const { mutateAsync, isLoading } = trpc.getTimeSeries.useMutation();
 
   const handleQuery = async () => {
-    if (startDate && endDate) {
+    if (startDate && endDate && averageType) {
       const props = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
+        averageType: averageType as AverageType,
       };
       const response = await Promise.all([
         mutateAsync({ ...props, type: WeatherType.temperature }),
@@ -70,9 +73,10 @@ const TimeSeriesChart: FC = () => {
   return (
     <>
       <h2>Results</h2>
+      <BasicMenu items={Object.values(AverageType)} title='Average' setResponse={setAverageType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
       <BasicDateTimePicker selectedDate={endDate} setSelectedDate={setEndDate} />
-      <Button variant="contained" onClick={handleQuery}>
+      <Button variant="contained" onClick={handleQuery} disabled={!startDate || !endDate || !averageType}>
               Show
       </Button>
       {!isLoading && <HighchartsReact highcharts={Highcharts} options={options} />}

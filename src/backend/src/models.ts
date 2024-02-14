@@ -3,3 +3,9 @@ export enum WeatherType {
   humidity = 'humidity',
   pressure = 'pressure',
 }
+
+export enum AverageType {
+  daily = 'daily',
+  hourly = 'hourly',
+  minutely = 'minutely',
+}

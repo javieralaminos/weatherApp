@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { WeatherType } from '../../models';
+import { AverageType, WeatherType } from '../../models';
 
 export const GetTimeSeriesWeatherPropsSchema = z.object({
   startDate: z.string().datetime(),
   endDate: z.string().datetime(),
   type: z.nativeEnum(WeatherType),
-  unit: z.string().optional(),
+  averageType: z.nativeEnum(AverageType),
 });
 export type GetTimeSeriesWeatherProps = z.infer<typeof GetTimeSeriesWeatherPropsSchema>;
 
@@ -24,6 +24,5 @@ export const SetWeatherPropsSchema = z.object({
   datetime: z.string().datetime(),
   value: z.number(),
   type: z.nativeEnum(WeatherType),
-  unit: z.string().optional(),
 });
 export type SetWeatherProps = z.infer<typeof SetWeatherPropsSchema>;

@@ -38,7 +38,7 @@ const WeatherIngestion: FunctionComponent = () => {
         value={weatherValue}
         onChange={handleTemperatureChange}
       />
-      <Button variant="contained" onClick={handleIngestion}>
+      <Button variant="contained" onClick={handleIngestion} disabled={!selectedDate || !weatherValue || !weatherType}>
               Ingest
       </Button>
     </>
