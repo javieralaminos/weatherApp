@@ -1,8 +1,12 @@
+import path from 'path';
+import { CloudFrontToS3 } from '@aws-solutions-constructs/aws-cloudfront-s3';
 import { App, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
+import { BucketDeployment, Source } from 'aws-cdk-lib/aws-s3-deployment';
 import { Construct } from 'constructs';
 
 export class MyStack extends Stack {
@@ -31,6 +35,16 @@ export class MyStack extends Stack {
     });
     api.root.addResource('getTimeSeries').addMethod('POST');
     api.root.addResource('setWeather').addMethod('POST');
+
+    // Front end deployment
+    const websiteBucket = new Bucket(this, 'weatherAppS3', {
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
+    new BucketDeployment(this, 'weatherAppS3Build', {
+      sources: [Source.asset(path.join(__dirname, 'frontend/build'))],
+      destinationBucket: websiteBucket,
+    });
+    new CloudFrontToS3(this, 'weatherAppCF', { existingBucketObj: websiteBucket, insertHttpSecurityHeaders: false });
   }
 }
 

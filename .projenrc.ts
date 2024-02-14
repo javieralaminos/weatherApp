@@ -17,7 +17,7 @@ const main = new AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   name: 'weatherApp',
   packageName: 'weatherApp',
-  // deps: [],                /* Runtime dependencies of this module. */
+  deps: ['@aws-solutions-constructs/aws-cloudfront-s3'],
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The "name" in package.json. */
