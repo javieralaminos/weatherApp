@@ -10,9 +10,7 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
     const sortedResponse = timeSeries.sort((a, b) => a.datetime.localeCompare(b.datetime));
     if (props.averageType === 'hourly') {
       const hourlyTimeSeries = sortedResponse.reduce((acc, curr) => {
-        const date = new Date(curr.datetime);
-        const hour = date.getHours();
-        const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${hour}`;
+        const key = curr.datetime.slice(0, 13) + ':00:00.000Z';
         if (acc[key]) {
           acc[key].push(curr);
         } else {
@@ -20,15 +18,15 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
         }
         return acc;
       }, {} as Record<string, typeof sortedResponse>);
-      const hourlyAverages = Object.values(hourlyTimeSeries).map((d) => {
-        const average = d.reduce((acc, curr) => acc + curr.value, 0) / d.length;
-        return { datetime: d[0].datetime, value: average, type: d[0].type };
+      const hourlyAverages = Object.keys(hourlyTimeSeries).map((key) => {
+        const average = hourlyTimeSeries[key].reduce((acc, curr) => acc + curr.value, 0) / hourlyTimeSeries[key].length;
+        return { datetime: key, value: average, type: props.type };
       });
+      console.log(hourlyAverages);
       return { timeSeries: hourlyAverages };
     } else if (props.averageType === 'daily') {
       const dailyTimeSeries = sortedResponse.reduce((acc, curr) => {
-        const date = new Date(curr.datetime);
-        const key = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const key = curr.datetime.slice(0, 10) + 'T00:00:00.000Z';
         if (acc[key]) {
           acc[key].push(curr);
         } else {
@@ -36,10 +34,11 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
         }
         return acc;
       }, {} as Record<string, typeof sortedResponse>);
-      const dailyAverages = Object.values(dailyTimeSeries).map((d) => {
-        const average = d.reduce((acc, curr) => acc + curr.value, 0) / d.length;
-        return { datetime: d[0].datetime, value: average, type: d[0].type };
+      const dailyAverages = Object.keys(dailyTimeSeries).map((key) => {
+        const average = dailyTimeSeries[key].reduce((acc, curr) => acc + curr.value, 0) / dailyTimeSeries[key].length;
+        return { datetime: key, value: average, type: props.type };
       });
+      console.log(dailyAverages);
       return { timeSeries: dailyAverages };
     } else {
       return { timeSeries: sortedResponse };
