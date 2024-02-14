@@ -30,11 +30,12 @@
     "organization": false
   },
   "devDependencies": {
+    "@aws-cdk/assert": "^1.2.3",
     "@types/jest": "^29.5.12",
     "@types/node": "^18",
     "@typescript-eslint/eslint-plugin": "^6",
     "@typescript-eslint/parser": "^6",
-    "aws-cdk": "^2.1.0",
+    "aws-cdk": "^1.2.3",
     "esbuild": "^0.20.0",
     "eslint": "^8",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -50,9 +51,8 @@
     "@aws-cdk/aws-apigateway": "^1.204.0",
     "@aws-cdk/aws-lambda": "^1.204.0",
     "@aws-cdk/aws-s3": "^1.204.0",
-    "@aws-cdk/core": "^1.204.0",
-    "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5"
+    "@aws-cdk/core": "^1.2.3",
+    "constructs": "^3.2.27"
   },
   "license": "Apache-2.0",
   "version": "0.0.0",
