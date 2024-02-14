@@ -50,6 +50,8 @@ const frontend = new ReactTypeScriptProject({
     '@mui/x-date-pickers',
     'eslint-plugin-react-hooks',
     'highcharts',
+    'highcharts-react-official',
+    'highcharts-rounded-corners',
     'zod',
     `@tanstack/react-query@${REACT_QUERY_VERSION}`,
     `@trpc/client@${TRPC_VERSION}`,

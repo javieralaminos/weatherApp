@@ -5,6 +5,7 @@ import { enGB } from 'date-fns/locale/en-GB';
 import './App.css';
 import TrpcProvider from './components/trpc';
 import WeatherIngestion from './components/WeatherIgestion';
+import TimeSeriesChart from './components/WeatherTimeSeries';
 
 function App() {
   return (
@@ -12,8 +13,12 @@ function App() {
       <TrpcProvider apiBaseUrl={'http://localhost:4000/trpc/'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
 
-
-          <WeatherIngestion />
+          <p>
+            <WeatherIngestion />
+          </p>
+          <p>
+            <TimeSeriesChart />
+          </p>
         </LocalizationProvider>
       </TrpcProvider>
     </>

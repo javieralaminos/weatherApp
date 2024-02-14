@@ -129,6 +129,14 @@
       "type": "runtime"
     },
     {
+      "name": "highcharts-react-official",
+      "type": "runtime"
+    },
+    {
+      "name": "highcharts-rounded-corners",
+      "type": "runtime"
+    },
+    {
       "name": "node-fetch",
       "type": "runtime"
     },

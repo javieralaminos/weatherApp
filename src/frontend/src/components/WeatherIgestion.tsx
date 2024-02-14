@@ -1,8 +1,8 @@
 
 import { Button, TextField } from '@mui/material';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { FunctionComponent, useState } from 'react';
 import BasicMenu from './BasicMenu';
+import BasicDateTimePicker from './DateTimePicker';
 import { WeatherType } from './models';
 import { trpc } from './trpc';
 
@@ -11,9 +11,6 @@ const WeatherIngestion: FunctionComponent = () => {
   const [weatherValue, setWeatherValue] = useState<number | null>(null);
   const [weatherType, setWeatherType] = useState<string | null>(null);
   const { mutateAsync } = trpc.setWeather.useMutation();
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
-  };
 
   const handleTemperatureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -21,7 +18,6 @@ const WeatherIngestion: FunctionComponent = () => {
   };
 
   const handleIngestion = async () => {
-    console.log('Ingesting', selectedDate, weatherValue, weatherType);
     if (selectedDate && weatherValue && weatherType) {
       await mutateAsync({
         datetime: selectedDate.toISOString(),
@@ -35,11 +31,7 @@ const WeatherIngestion: FunctionComponent = () => {
     <>
       <h1>Weather Ingestion</h1>
       <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
-      <DateTimePicker
-        label="Select Date and Time"
-        value={selectedDate}
-        onChange={handleDateChange}
-      />
+      <BasicDateTimePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TextField
         label={weatherType || ''}
         type="number"
