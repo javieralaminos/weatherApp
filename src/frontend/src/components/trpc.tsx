@@ -1,6 +1,6 @@
-import { type trpcComposition } from '@backend/src/index';
 import { QueryClient } from '@tanstack/react-query';
 import { createTRPCReact, httpLink } from '@trpc/react-query';
+import { trpcComposition } from '@weatherApp/backend/lib/index';
 import { useState } from 'react';
 
 
@@ -17,12 +17,12 @@ export const trpcClient = (apiBaseUrl: string) =>
   });
 
 interface Props {
-  dashboardApiBaseUrl: string;
+  apiBaseUrl: string;
   children: React.ReactNode;
 }
 
-function TrpcProvider({ dashboardApiBaseUrl, children }: Props) {
-  const [trpcClientInstance] = useState(() => trpcClient(dashboardApiBaseUrl));
+function TrpcProvider({ apiBaseUrl, children }: Props) {
+  const [trpcClientInstance] = useState(() => trpcClient(apiBaseUrl));
 
   return (
     <trpc.Provider client={trpcClientInstance} queryClient={queryClient}>

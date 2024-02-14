@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/aws-lambda",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -64,6 +68,7 @@
     },
     {
       "name": "@trpc/server",
+      "version": "10.45.0",
       "type": "runtime"
     },
     {

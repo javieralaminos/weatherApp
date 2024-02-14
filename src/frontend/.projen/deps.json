@@ -77,11 +77,6 @@
       "type": "override"
     },
     {
-      "name": "@backend",
-      "version": "link:../backend",
-      "type": "runtime"
-    },
-    {
       "name": "@emotion/react",
       "type": "runtime"
     },
@@ -103,14 +98,22 @@
     },
     {
       "name": "@tanstack/react-query",
+      "version": "<5",
       "type": "runtime"
     },
     {
       "name": "@trpc/client",
+      "version": "10.45.0",
       "type": "runtime"
     },
     {
       "name": "@trpc/react-query",
+      "version": "10.45.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@weatherApp/backend",
+      "version": "link:../backend",
       "type": "runtime"
     },
     {

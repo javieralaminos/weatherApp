@@ -20,13 +20,13 @@ const WeatherIngestion: FunctionComponent = () => {
     setWeatherValue(value ? parseInt(value) : null);
   };
 
-  const handleIngestion = () => {
+  const handleIngestion = async () => {
     console.log('Ingesting', selectedDate, weatherValue, weatherType);
-    mutateAsync({
-      date: selectedDate?.toISOString(),
-      value: weatherValue,
-      type: weatherType,
-    });
+    // await mutateAsync({
+    //   date: selectedDate?.toISOString(),
+    //   value: weatherValue,
+    //   type: weatherType,
+    // });
   };
 
   return (

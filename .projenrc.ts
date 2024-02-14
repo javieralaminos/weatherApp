@@ -24,6 +24,8 @@ const main = new AwsCdkTypeScriptApp({
   // packageName: undefined,  /* The "name" in package.json. */
 });
 
+const REACT_QUERY_VERSION = '<5'; // v5 is not compatible with trpc v10
+const TRPC_VERSION = '10.45.0';
 const backend = new TypeScriptAppProject({
   ...COMMON_PROJEN_SETTINGS,
   name: 'backend',
@@ -31,7 +33,8 @@ const backend = new TypeScriptAppProject({
   outdir: 'src/backend',
   release: false,
   buildWorkflow: false,
-  deps: ['@trpc/server', 'zod', '@aws-sdk/client-dynamodb'],
+  deps: [`@trpc/server@${TRPC_VERSION}`, 'zod', '@aws-sdk/client-dynamodb'],
+  devDeps: ['@types/aws-lambda'],
 });
 const frontend = new ReactTypeScriptProject({
   ...COMMON_PROJEN_SETTINGS,
@@ -49,13 +52,13 @@ const frontend = new ReactTypeScriptProject({
     'eslint-plugin-react-hooks',
     'highcharts',
     'zod',
-    '@tanstack/react-query',
-    '@trpc/client',
-    '@trpc/react-query',
+    `@tanstack/react-query@${REACT_QUERY_VERSION}`,
+    `@trpc/client@${TRPC_VERSION}`,
+    `@trpc/react-query@${TRPC_VERSION}`,
     'node-fetch',
     'date-fns',
   ],
 });
-frontend.addDeps(`@backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
+frontend.addDeps(`@weatherApp/backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
 
 main.synth();
