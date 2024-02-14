@@ -1,8 +1,8 @@
-import { LambdaRestApi } from '@aws-cdk/aws-apigateway';
-import { AttributeType, BillingMode, Table } from '@aws-cdk/aws-dynamodb';
-import { Runtime } from '@aws-cdk/aws-lambda';
-import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
-import { Stack, StackProps, RemovalPolicy, App } from '@aws-cdk/core';
+import { App, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
+import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Construct } from 'constructs';
 
 export class MyStack extends Stack {
@@ -19,7 +19,7 @@ export class MyStack extends Stack {
     // Create the Lambda function
     const lambdaFunction = new NodejsFunction(this, 'weatherLambda', {
       entry: require.resolve('./backend/src/index'),
-      runtime: Runtime.NODEJS_12_X,
+      runtime: Runtime.NODEJS_16_X,
       environment: {
         TABLE_NAME: table.tableName,
       },

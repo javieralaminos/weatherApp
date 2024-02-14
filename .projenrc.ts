@@ -14,10 +14,10 @@ const COMMON_PROJEN_SETTINGS = {
 
 const main = new AwsCdkTypeScriptApp({
   ...COMMON_PROJEN_SETTINGS,
-  cdkVersion: '1.204.0',
+  cdkVersion: '2.1.0',
   name: 'weatherApp',
   packageName: 'weatherApp',
-  deps: ['@aws-cdk/core', '@aws-cdk/aws-s3', '@aws-cdk/aws-lambda', '@aws-cdk/aws-apigateway', '@aws-cdk/aws-dynamodb', '@aws-cdk/aws-lambda-nodejs'],
+  deps: [],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */

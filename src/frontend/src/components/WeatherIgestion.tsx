@@ -22,11 +22,13 @@ const WeatherIngestion: FunctionComponent = () => {
 
   const handleIngestion = async () => {
     console.log('Ingesting', selectedDate, weatherValue, weatherType);
-    // await mutateAsync({
-    //   date: selectedDate?.toISOString(),
-    //   value: weatherValue,
-    //   type: weatherType,
-    // });
+    if (selectedDate && weatherValue && weatherType) {
+      await mutateAsync({
+        datetime: selectedDate.toISOString(),
+        value: weatherValue,
+        type: weatherType as WeatherType,
+      });
+    }
   };
 
   return (
