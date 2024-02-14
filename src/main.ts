@@ -1,7 +1,8 @@
 import path from 'path';
-import { CloudFrontToS3 } from '@aws-solutions-constructs/aws-cloudfront-s3';
 import { App, RemovalPolicy, Stack, StackProps } from 'aws-cdk-lib';
 import { LambdaRestApi } from 'aws-cdk-lib/aws-apigateway';
+import { AllowedMethods, CachePolicy, Distribution, OriginAccessIdentity, ViewerProtocolPolicy } from 'aws-cdk-lib/aws-cloudfront';
+import { RestApiOrigin, S3Origin } from 'aws-cdk-lib/aws-cloudfront-origins';
 import { AttributeType, BillingMode, Table } from 'aws-cdk-lib/aws-dynamodb';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
@@ -33,18 +34,30 @@ export class MyStack extends Stack {
       handler: lambdaFunction,
       proxy: false,
     });
-    api.root.addResource('getTimeSeries').addMethod('POST');
-    api.root.addResource('setWeather').addMethod('POST');
+    const root = api.root.addResource('trpc');
+    root.addResource('getTimeSeries').addMethod('POST');
+    root.addResource('setWeather').addMethod('POST');
 
     // Front end deployment
+    const originAccessIdentity = new OriginAccessIdentity(this, 'OAI');
     const websiteBucket = new Bucket(this, 'weatherAppS3', {
       removalPolicy: RemovalPolicy.DESTROY,
     });
-    new BucketDeployment(this, 'weatherAppS3Build', {
+    websiteBucket.grantRead(originAccessIdentity);
+    const distribution = new Distribution(this, 'Distribution', {
+      defaultBehavior: { origin: new S3Origin(websiteBucket) },
+      defaultRootObject: 'index.html',
+    });
+    new BucketDeployment(this, 'DeployWithInvalidation', {
       sources: [Source.asset(path.join(__dirname, 'frontend/build'))],
       destinationBucket: websiteBucket,
+      distribution,
     });
-    new CloudFrontToS3(this, 'weatherAppCF', { existingBucketObj: websiteBucket, insertHttpSecurityHeaders: false });
+    distribution.addBehavior('/trpc/*', new RestApiOrigin(api), {
+      allowedMethods: AllowedMethods.ALLOW_ALL,
+      cachePolicy: CachePolicy.CACHING_DISABLED,
+      viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+    });
   }
 }
 
