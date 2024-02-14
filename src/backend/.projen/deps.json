@@ -72,6 +72,18 @@
       "type": "runtime"
     },
     {
+      "name": "@types/express",
+      "type": "runtime"
+    },
+    {
+      "name": "cors",
+      "type": "runtime"
+    },
+    {
+      "name": "express",
+      "type": "runtime"
+    },
+    {
       "name": "zod",
       "type": "runtime"
     }

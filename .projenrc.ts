@@ -17,7 +17,6 @@ const main = new AwsCdkTypeScriptApp({
   cdkVersion: '2.1.0',
   name: 'weatherApp',
   packageName: 'weatherApp',
-  deps: [],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
@@ -33,7 +32,7 @@ const backend = new TypeScriptAppProject({
   outdir: 'src/backend',
   release: false,
   buildWorkflow: false,
-  deps: [`@trpc/server@${TRPC_VERSION}`, 'zod', '@aws-sdk/client-dynamodb'],
+  deps: [`@trpc/server@${TRPC_VERSION}`, 'zod', '@aws-sdk/client-dynamodb', 'cors', 'express', '@types/express'],
   devDeps: ['@types/aws-lambda'],
 });
 const frontend = new ReactTypeScriptProject({

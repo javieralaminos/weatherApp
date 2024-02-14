@@ -9,7 +9,7 @@ import WeatherIngestion from './components/WeatherIgestion';
 function App() {
   return (
     <>
-      <TrpcProvider apiBaseUrl={'https://bsdne6hzh0.execute-api.eu-west-1.amazonaws.com/prod/'}>
+      <TrpcProvider apiBaseUrl={'http://localhost:4000/trpc/'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
 
 

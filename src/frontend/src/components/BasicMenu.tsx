@@ -26,7 +26,7 @@ export default function BasicMenu(props: BasicMenuProps) {
   };
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? 'basic-menu' : undefined}
@@ -51,6 +51,6 @@ export default function BasicMenu(props: BasicMenuProps) {
           }>{item}</MenuItem>
         ))}
       </Menu>
-    </div>
+    </>
   );
 }
