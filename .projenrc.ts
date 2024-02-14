@@ -14,10 +14,10 @@ const COMMON_PROJEN_SETTINGS = {
 
 const main = new AwsCdkTypeScriptApp({
   ...COMMON_PROJEN_SETTINGS,
-  cdkVersion: '1.2.3',
+  cdkVersion: '1.204.0',
   name: 'weatherApp',
   packageName: 'weatherApp',
-  deps: ['@aws-cdk/core', '@aws-cdk/aws-s3', '@aws-cdk/aws-lambda', '@aws-cdk/aws-apigateway'],
+  deps: ['@aws-cdk/core', '@aws-cdk/aws-s3', '@aws-cdk/aws-lambda', '@aws-cdk/aws-apigateway', '@aws-cdk/aws-dynamodb', '@aws-cdk/aws-lambda-nodejs'],
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
@@ -60,10 +60,4 @@ const frontend = new ReactTypeScriptProject({
   ],
 });
 frontend.addDeps(`@weatherApp/backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
-frontend.tryFindObjectFile('tsconfig.json')?.addOverride('references', [
-  {
-    path: path.relative(frontend.outdir, backend.outdir),
-  },
-]);
-backend.tryFindObjectFile('tsconfig.json')?.addOverride('compilerOptions.composite', true);
 main.synth();

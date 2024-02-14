@@ -4,7 +4,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { FunctionComponent, useState } from 'react';
 import BasicMenu from './BasicMenu';
 import { WeatherType } from './models';
-import trpc from './trpc';
+import { trpc } from './trpc';
 
 const WeatherIngestion: FunctionComponent = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);

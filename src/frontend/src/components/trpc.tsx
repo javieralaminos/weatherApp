@@ -1,10 +1,10 @@
 import { QueryClient } from '@tanstack/react-query';
 import { createTRPCReact, httpLink } from '@trpc/react-query';
-import { trpcComposition } from '@weatherApp/backend/lib/index';
+import { type AppRouter } from '@weatherApp/backend/src';
 import { useState } from 'react';
 
 
-export const trpc = createTRPCReact<typeof trpcComposition.appRouter>();
+export const trpc = createTRPCReact<AppRouter>();
 export const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 export const trpcClient = (apiBaseUrl: string) =>
   trpc.createClient({

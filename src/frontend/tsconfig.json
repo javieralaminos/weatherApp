@@ -41,10 +41,5 @@
     "src/**/*.ts",
     "src"
   ],
-  "exclude": [],
-  "references": [
-    {
-      "path": "../backend"
-    }
-  ]
+  "exclude": []
 }
