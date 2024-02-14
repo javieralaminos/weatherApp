@@ -2,34 +2,38 @@ import { Button } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { FC, useState } from 'react';
-import BasicMenu from './BasicMenu';
 import BasicDateTimePicker from './DateTimePicker';
 import { WeatherType } from './models';
 import { trpc } from './trpc';
 
-interface TimeSeriesData {
-  timestamp: number;
-  value: number;
+interface TimeSeriesDataResponse {
+  [WeatherType.temperature]: [number, number][];
+  [WeatherType.humidity]: [number, number][];
+  [WeatherType.pressure]: [number, number][];
 }
 
 const TimeSeriesChart: FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [data, setData] = useState<TimeSeriesData[]>([]);
-  const [weatherType, setWeatherType] = useState<string | null>(null);
+  const [data, setData] = useState<TimeSeriesDataResponse>({ temperature: [], humidity: [], pressure: [] });
   const { mutateAsync, isLoading } = trpc.getTimeSeries.useMutation();
 
   const handleQuery = async () => {
-    if (startDate && endDate && weatherType) {
-      const response = await mutateAsync({
+    if (startDate && endDate) {
+      const props = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
-        type: weatherType as WeatherType,
+      };
+      const response = await Promise.all([
+        mutateAsync({ ...props, type: WeatherType.temperature }),
+        mutateAsync({ ...props, type: WeatherType.humidity }),
+        mutateAsync({ ...props, type: WeatherType.pressure }),
+      ]);
+      setData({
+        temperature: response[0].timeSeries.map((d) => ([new Date(d.datetime).getTime(), d.value])),
+        humidity: response[1].timeSeries.map((d) => ([new Date(d.datetime).getTime(), d.value])),
+        pressure: response[2].timeSeries.map((d) => ([new Date(d.datetime).getTime(), d.value])),
       });
-      setData(response.timeSeries.map((d) => ({
-        timestamp: new Date(d.datetime).getTime(),
-        value: d.value,
-      })));
     }
   };
   const options: Highcharts.Options = {
@@ -47,7 +51,18 @@ const TimeSeriesChart: FC = () => {
     series: [
       {
         type: 'line',
-        data: data.map((d) => [d.timestamp, d.value]),
+        data: data.temperature,
+        name: 'Temperature',
+      },
+      {
+        type: 'line',
+        data: data.humidity,
+        name: 'Humidity',
+      },
+      {
+        type: 'line',
+        data: data.pressure,
+        name: 'Pressure',
       },
     ],
   };
@@ -55,7 +70,6 @@ const TimeSeriesChart: FC = () => {
   return (
     <>
       <h2>Results</h2>
-      <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
       <BasicDateTimePicker selectedDate={endDate} setSelectedDate={setEndDate} />
       <Button variant="contained" onClick={handleQuery}>
