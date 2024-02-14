@@ -1,3 +1,4 @@
+import path from 'path';
 import { AwsCdkTypeScriptApp } from 'projen/lib/awscdk';
 import { TypeScriptAppProject } from 'projen/lib/typescript';
 import { ReactTypeScriptProject } from 'projen/lib/web';
@@ -23,17 +24,7 @@ const main = new AwsCdkTypeScriptApp({
   // packageName: undefined,  /* The "name" in package.json. */
 });
 
-new ReactTypeScriptProject({
-  ...COMMON_PROJEN_SETTINGS,
-  name: 'frontend',
-  parent: main,
-  outdir: 'src/frontend',
-  release: false,
-  buildWorkflow: false,
-  deps: ['zod'],
-});
-
-new TypeScriptAppProject({
+const backend = new TypeScriptAppProject({
   ...COMMON_PROJEN_SETTINGS,
   name: 'backend',
   parent: main,
@@ -42,4 +33,29 @@ new TypeScriptAppProject({
   buildWorkflow: false,
   deps: ['@trpc/server', 'zod', '@aws-sdk/client-dynamodb'],
 });
+const frontend = new ReactTypeScriptProject({
+  ...COMMON_PROJEN_SETTINGS,
+  name: 'frontend',
+  parent: main,
+  outdir: 'src/frontend',
+  release: false,
+  buildWorkflow: false,
+  deps: [
+    '@emotion/react',
+    '@emotion/styled',
+    '@mui/icons-material',
+    '@mui/material',
+    '@mui/x-date-pickers',
+    'eslint-plugin-react-hooks',
+    'highcharts',
+    'zod',
+    '@tanstack/react-query',
+    '@trpc/client',
+    '@trpc/react-query',
+    'node-fetch',
+    'date-fns',
+  ],
+});
+frontend.addDeps(`@backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
+
 main.synth();

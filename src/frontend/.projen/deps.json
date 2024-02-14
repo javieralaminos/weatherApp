@@ -77,6 +77,59 @@
       "type": "override"
     },
     {
+      "name": "@backend",
+      "version": "link:../backend",
+      "type": "runtime"
+    },
+    {
+      "name": "@emotion/react",
+      "type": "runtime"
+    },
+    {
+      "name": "@emotion/styled",
+      "type": "runtime"
+    },
+    {
+      "name": "@mui/icons-material",
+      "type": "runtime"
+    },
+    {
+      "name": "@mui/material",
+      "type": "runtime"
+    },
+    {
+      "name": "@mui/x-date-pickers",
+      "type": "runtime"
+    },
+    {
+      "name": "@tanstack/react-query",
+      "type": "runtime"
+    },
+    {
+      "name": "@trpc/client",
+      "type": "runtime"
+    },
+    {
+      "name": "@trpc/react-query",
+      "type": "runtime"
+    },
+    {
+      "name": "date-fns",
+      "type": "runtime"
+    },
+    {
+      "name": "eslint-plugin-react-hooks",
+      "type": "runtime"
+    },
+    {
+      "name": "highcharts",
+      "type": "runtime"
+    },
+    {
+      "name": "node-fetch",
+      "type": "runtime"
+    },
+    {
       "name": "react",
       "type": "runtime"
     },

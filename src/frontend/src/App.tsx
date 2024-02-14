@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
+import { enGB } from 'date-fns/locale/en-GB';
+
+import './App.css';
+import WeatherIngestion from './components/WeatherIgestion';
 
 function App() {
   return (
-   <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <TrpcProvider dashboardApiBaseUrl={envConfig.dashboardApiBaseUrl}> */}
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+
+
+        <WeatherIngestion />
+      </LocalizationProvider>
+      {/* </TrpcProvider> */}
+    </>
+
   );
 }
 
