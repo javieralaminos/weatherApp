@@ -2,7 +2,7 @@ import { initTRPC } from '@trpc/server';
 import { awsLambdaRequestHandler } from '@trpc/server/adapters/aws-lambda';
 import { WeatherRepositoryStubAdapter, WeatherRepositoryDynamoAdapter } from './adapters/driven';
 import { weatherServerTrpcAdapter } from './adapters/driver';
-import { weatherInjestionTrpcAdapter } from './adapters/driver/weather-injestion-trpc-adapter';
+import { weatherIngestionTrpcAdapter } from './adapters/driver/weather-ingestion-trpc-adapter';
 import { WeatherService } from './app/weatherService';
 
 export const trpcCompose = () => {
@@ -11,7 +11,7 @@ export const trpcCompose = () => {
 
   const trpcInstance = initTRPC.create();
   const weatherServer = weatherServerTrpcAdapter(api, trpcInstance);
-  const weatherIngestion = weatherInjestionTrpcAdapter(api, trpcInstance);
+  const weatherIngestion = weatherIngestionTrpcAdapter(api, trpcInstance);
   const appRouter = trpcInstance.mergeRouters(weatherServer, weatherIngestion);
   const handler = awsLambdaRequestHandler({
     router: appRouter,
@@ -25,7 +25,7 @@ export const trpcStubCompose = () => {
 
   const trpcInstance = initTRPC.create();
   const weatherServer = weatherServerTrpcAdapter(api, trpcInstance);
-  const weatherIngestion = weatherInjestionTrpcAdapter(api, trpcInstance);
+  const weatherIngestion = weatherIngestionTrpcAdapter(api, trpcInstance);
   const appRouter = trpcInstance.mergeRouters(weatherServer, weatherIngestion);
   const handler = awsLambdaRequestHandler({
     router: appRouter,

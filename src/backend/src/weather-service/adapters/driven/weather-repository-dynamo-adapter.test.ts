@@ -8,7 +8,7 @@ describe('WeatherRepositoryDynamoAdapter', () => {
     weatherRepository = new WeatherRepositoryDynamoAdapter();
   });
 
-  describe('getTimeSeries', () => {
+  describe('getWeatherMetrics', () => {
     it('should return time series data', async () => {
       // Mock the DynamoDBClient and its send method
       const mockSend = jest.fn().mockResolvedValue({
@@ -34,28 +34,26 @@ describe('WeatherRepositoryDynamoAdapter', () => {
         type: WeatherType.temperature,
       };
 
-      // Call the getTimeSeries method
-      const result = await weatherRepository.getTimeSeries(props);
+      // Call the getWeatherMetrics method
+      const result = await weatherRepository.getWeatherMetrics(props);
 
       // Verify the result
-      expect(result).toEqual({
-        timeSeries: [
-          {
-            datetime: '2022-01-01T00:00:00Z',
-            value: 10,
-            type: 'temperature',
-          },
-          {
-            datetime: '2022-01-02T00:00:00Z',
-            value: 15,
-            type: 'temperature',
-          },
-        ],
-      });
+      expect(result).toEqual([
+        {
+          datetime: '2022-01-01T00:00:00Z',
+          value: 10,
+          type: 'temperature',
+        },
+        {
+          datetime: '2022-01-02T00:00:00Z',
+          value: 15,
+          type: 'temperature',
+        },
+      ]);
       expect(mockSend).toHaveBeenCalledTimes(1);
     });
 
-    it('should throw an error if no items found', async () => {
+    it('should throw an error if malformed response', async () => {
       // Mock the DynamoDBClient and its send method
       const mockSend = jest.fn().mockResolvedValue({});
       weatherRepository.client.send = mockSend;
@@ -67,8 +65,8 @@ describe('WeatherRepositoryDynamoAdapter', () => {
         type: WeatherType.temperature,
       };
 
-      // Call the getTimeSeries method and expect it to throw an error
-      await expect(weatherRepository.getTimeSeries(props)).rejects.toThrow('No items found');
+      // Call the getWeatherMetrics method and expect it to throw an error
+      await expect(weatherRepository.getWeatherMetrics(props)).rejects.toThrow('Malformed response from DynamoDB');
       expect(mockSend).toHaveBeenCalledTimes(1);
     });
   });
@@ -87,7 +85,7 @@ describe('WeatherRepositoryDynamoAdapter', () => {
       };
 
       // Call the setWeather method
-      await weatherRepository.setWeather(props);
+      await weatherRepository.setWeatherMetric(props);
 
       expect(mockSend).toHaveBeenCalledTimes(1);
     });

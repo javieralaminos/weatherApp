@@ -1,19 +1,18 @@
 import { assert } from 'console';
 import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
 import { WeatherType } from '../../../models';
-import { GetTimeSeriesWeatherProps, SetWeatherProps, TimeSeriesResponse } from '../../app/schemas';
-import { ForQueringWeather } from '../../ports/driven/for-quering-weather';
+import { ForQueringWeather, GetWeatherMetricsProps, MetricResponse, SetWeatherMetricProps } from '../../ports/driven/for-quering-weather';
 
 export class WeatherRepositoryDynamoAdapter implements ForQueringWeather {
   tableName: string;
   public readonly client = new DynamoDBClient({});
   constructor() {
     assert(process.env.TABLE_NAME, 'TABLE_NAME is not defined');
-    this.tableName = process.env.TABLE_NAME ?? '';
+    this.tableName = process.env.TABLE_NAME!;
   }
 
 
-  public async getTimeSeries(props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
+  public async getWeatherMetrics(props: GetWeatherMetricsProps): Promise<MetricResponse[]> {
     const { startDate, endDate, type } = props;
     const params = {
       TableName: this.tableName,
@@ -25,16 +24,14 @@ export class WeatherRepositoryDynamoAdapter implements ForQueringWeather {
       },
     };
     const response = await this.client.send(new QueryCommand(params));
-    if (!response.Items) throw new Error('No items found');
-    return {
-      timeSeries: response.Items.map((item) => ({
-        datetime: item.datetime.S ?? '',
-        value: Number(item.value.N),
-        type: item.type.S as WeatherType,
-      })),
-    };
+    if (!response.Items) throw new Error('Malformed response from DynamoDB');
+    return response.Items.map((item) => ({
+      datetime: item.datetime.S ?? '',
+      value: Number(item.value.N),
+      type: item.type.S as WeatherType,
+    }));
   }
-  public async setWeather(props: SetWeatherProps): Promise<void> {
+  public async setWeatherMetric(props: SetWeatherMetricProps): Promise<void> {
     const { datetime, value, type } = props;
     const params = {
       TableName: this.tableName,

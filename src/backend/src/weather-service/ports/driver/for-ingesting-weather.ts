@@ -1,5 +1,5 @@
 import { SetWeatherProps } from '../../app/schemas';
 
-export interface ForInjestingWeather {
+export interface ForIngestingWeather {
   setWeather: (props: SetWeatherProps) => Promise<void>;
 }
