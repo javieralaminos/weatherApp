@@ -3,6 +3,8 @@
   "description": "A simple weather app",
   "scripts": {
     "build": "npx projen build",
+    "build:backend": "npx projen build:backend",
+    "build:frontend": "npx projen build:frontend",
     "bundle": "npx projen bundle",
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",

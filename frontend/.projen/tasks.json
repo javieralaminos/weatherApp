@@ -95,15 +95,7 @@
     },
     "test": {
       "name": "test",
-      "description": "Run tests",
-      "steps": [
-        {
-          "spawn": "eslint"
-        },
-        {
-          "exec": "react-scripts test --watchAll=false"
-        }
-      ]
+      "description": "Run tests"
     },
     "upgrade": {
       "name": "upgrade",

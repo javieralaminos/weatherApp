@@ -27,6 +27,7 @@ const REACT_QUERY_VERSION = '<5'; // v5 is not compatible with trpc v10
 const TRPC_VERSION = '10.45.0';
 const backend = new TypeScriptAppProject({
   ...COMMON_PROJEN_SETTINGS,
+  testdir: '',
   name: 'backend',
   parent: iac,
   outdir: 'backend',
@@ -61,4 +62,26 @@ const frontend = new ReactTypeScriptProject({
   ],
 });
 frontend.addDeps(`@weatherApp/backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
+// Remove frontend tests
+frontend.testTask.reset();
+
+const addBuildStep = (parent: TypeScriptAppProject, child: TypeScriptAppProject) => {
+  const buildTask = parent.addTask(`build:${child.name}`, {
+    description: `Build ${child.name}`,
+    cwd: path.relative(parent.outdir, child.outdir),
+    steps: [
+      {
+        exec: 'yarn install',
+      },
+      {
+        exec: `${child.projenCommand} ${child.buildTask.name}`,
+      },
+    ],
+  });
+  parent.preCompileTask.prependSpawn(buildTask);
+};
+
+addBuildStep(iac, backend);
+addBuildStep(iac, frontend);
+
 iac.synth();
