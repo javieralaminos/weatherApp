@@ -1,7 +1,7 @@
 
 import { Button, TextField } from '@mui/material';
 import { FunctionComponent, useState } from 'react';
-import BasicMenu from './BasicMenu';
+import BasicSelect from './BasicSelect';
 import BasicDateTimePicker from './DateTimePicker';
 import { WeatherType } from './models';
 import { trpc } from './trpc';
@@ -25,7 +25,7 @@ const WeatherIngestion: FunctionComponent = () => {
   return (
     <div>
       <h2>Weather Ingestion</h2>
-      <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
+      <BasicSelect values={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TextField
         label={weatherType || ''}

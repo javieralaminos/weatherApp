@@ -9,14 +9,13 @@ export const GetTimeSeriesWeatherPropsSchema = z.object({
 });
 export type GetTimeSeriesWeatherProps = z.infer<typeof GetTimeSeriesWeatherPropsSchema>;
 
-export const TimeSeriesSchema = z.object({
-  datetime: z.string().datetime(),
-  value: z.number(),
-  type: z.nativeEnum(WeatherType),
-});
-
 export const TimeSeriesResponseSchema = z.object({
-  timeSeries: z.array(TimeSeriesSchema),
+  timeSeries: z.array(
+    z.object({
+      datetime: z.string().datetime(),
+      value: z.number(),
+      type: z.nativeEnum(WeatherType),
+    })),
 });
 export type TimeSeriesResponse = z.infer<typeof TimeSeriesResponseSchema>;
 

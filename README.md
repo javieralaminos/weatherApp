@@ -20,9 +20,9 @@ All the infrastructure needed to set up the project, using CDK the code is easly
 
 ### Backend
 
-Using hexagonal architecture (Ports and adapters). There is only one service, weather-service, with 2 drivers for serving the requests and one driven to store the data.
+It's developed following hexagonal architecture (Ports and adapters). There is only one service, weather-service, with 2 drivers for serving the requests and one driven to store the data.
 
-This architecture allows to create new ports, new adapters and new services. Some examples:
+This architecture allows to create new ports, new adapters and new services, decoupling the code. Some examples:
 
 - Adding a new driven port, for-fetching-data, that allows ingest data using and external website that serve the metrics. And a driver port to trigger a function that retrieve the data and store it
 - Add a new adapter, weather-repository-aurora-adapter, that allow changing the database without affecting the application bussines

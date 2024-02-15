@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { FC, useState } from 'react';
-import BasicMenu from './BasicMenu';
+import BasicSelect from './BasicSelect';
 import BasicDateTimePicker from './DateTimePicker';
 import { AverageType, WeatherType } from './models';
 import { trpc } from './trpc';
@@ -73,7 +73,7 @@ const TimeSeriesChart: FC = () => {
   return (
     <div>
       <h2>Results</h2>
-      <BasicMenu items={Object.values(AverageType)} title='Average' setResponse={setAverageType} />
+      <BasicSelect values={Object.values(AverageType)} title='Average' setResponse={setAverageType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
       <BasicDateTimePicker selectedDate={endDate} setSelectedDate={setEndDate} />
       <Button variant="contained" onClick={handleQuery} disabled={!startDate || !endDate || !averageType}>
