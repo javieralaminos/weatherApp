@@ -10,7 +10,7 @@ import TimeSeriesChart from './components/WeatherTimeSeries';
 function App() {
   return (
     <>
-      <TrpcProvider apiBaseUrl={'http://localhost:4000/trpc'}>
+      <TrpcProvider apiBaseUrl={'/trpc'}>
         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
           <h1>Weather App</h1>
           <p>
