@@ -1,6 +1,5 @@
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
-import { enGB } from 'date-fns/locale/en-GB';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import './App.css';
 import TrpcProvider from './components/trpc';
@@ -10,7 +9,7 @@ import TimeSeriesChart from './components/WeatherTimeSeries';
 function App() {
   return (
     <TrpcProvider apiBaseUrl={'/trpc'}>
-      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <h1>Weather App</h1>
         <WeatherIngestion />
         <TimeSeriesChart />
