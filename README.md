@@ -23,3 +23,22 @@ TypeScript is a statically typed superset of JavaScript that adds optional type 
 DynamoDB is a fully managed NoSQL database service provided by AWS. It offers scalability, high availability, and low latency. We chose DynamoDB for this project to store and retrieve weather data efficiently, ensuring fast and reliable access.
 
 ## Project overview
+
+The project has 3 different subprojects, IAC, backend and frontend. The code it's distributed in 3 folders:
+
+- src/main.ts -> IAC code
+- backend/src
+- frontend/src
+
+### IAC
+
+All the infrastructure needed to set up the project:
+
+- Lambda with API Gateway to serve the endpoints
+- Dynamodb to store the data
+- Cloudfront and S3 to serve the frontend code
+
+### Backend
+
+Using hexagonal architecture (Ports and adapters). There is only one service (Hexagon), weather-service, with 2 drivers for serving the requests and one driven to store the data.
+This architecture allows to create new ports to the serviceservices, for example a repository to handle da

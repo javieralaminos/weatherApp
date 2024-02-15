@@ -13,7 +13,7 @@ import { Construct } from 'constructs';
 export class MyStack extends Stack {
   constructor(scope: Construct, id: string, props: StackProps = {}) {
     super(scope, id, props);
-
+    // DynamoDB table
     const table = new Table(this, 'weatherTable', {
       tableName: 'weatherTable',
       partitionKey: { name: 'pk', type: AttributeType.STRING },
@@ -21,7 +21,8 @@ export class MyStack extends Stack {
       billingMode: BillingMode.PAY_PER_REQUEST,
       removalPolicy: RemovalPolicy.DESTROY,
     });
-    // Create the Lambda function
+
+    // Lambda function and API Gateway to serve the trpc API
     const lambdaFunction = new NodejsFunction(this, 'weatherLambda', {
       entry: require.resolve('../backend/src/index'),
       runtime: Runtime.NODEJS_20_X,
@@ -38,7 +39,7 @@ export class MyStack extends Stack {
     root.addResource('getTimeSeries').addMethod('POST');
     root.addResource('setWeather').addMethod('POST');
 
-    // Front end deployment
+    // Frontend S3 bucket and CloudFront distribution
     const originAccessIdentity = new OriginAccessIdentity(this, 'OAI');
     const websiteBucket = new Bucket(this, 'weatherAppS3', {
       removalPolicy: RemovalPolicy.DESTROY,
