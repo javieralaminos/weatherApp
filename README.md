@@ -1,7 +1,8 @@
 # Weather App
 
-This README file provides an overview of the Weather App project. It explains the purpose of the application and the
-reasons behind the choice of technologies used, including Projen, Hexagonal Architecture, TypeScript, and DynamoDB.
+This README file provides an overview of the Weather App project. It explains the purpose of the application and the reasons behind the choice of technologies used, including Projen, Hexagonal Architecture, TypeScript, and DynamoDB.
+
+It's currently deployed on an AWS account for view and test: https://dmzgxiadvt2nt.cloudfront.net/
 
 <img src="https://github.com/javieralaminos/weatherApp/assets/120646561/9c46cd0b-5dee-4df0-9818-a3cd4f1d6e5f" width="400" height="300">
 
