@@ -12,11 +12,6 @@ const WeatherIngestion: FunctionComponent = () => {
   const [weatherType, setWeatherType] = useState<string | null>(null);
   const { mutateAsync } = trpc.setWeather.useMutation();
 
-  const handleTemperatureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setWeatherValue(value ? parseInt(value) : null);
-  };
-
   const handleIngestion = async () => {
     if (selectedDate && weatherValue && weatherType) {
       await mutateAsync({
@@ -28,20 +23,24 @@ const WeatherIngestion: FunctionComponent = () => {
   };
 
   return (
-    <>
+    <div>
       <h2>Weather Ingestion</h2>
       <BasicMenu items={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TextField
         label={weatherType || ''}
         type="number"
+        inputMode="numeric"
         value={weatherValue}
-        onChange={handleTemperatureChange}
+        onChange={(event) => {
+          const inputValue = Number(event.target.value);
+          setWeatherValue(inputValue);
+        }}
       />
       <Button variant="contained" onClick={handleIngestion} disabled={!selectedDate || !weatherValue || !weatherType}>
               Ingest
       </Button>
-    </>
+    </div>
   );
 };
 

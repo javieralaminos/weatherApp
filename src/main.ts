@@ -24,7 +24,7 @@ export class MyStack extends Stack {
     // Create the Lambda function
     const lambdaFunction = new NodejsFunction(this, 'weatherLambda', {
       entry: require.resolve('./backend/src/index'),
-      runtime: Runtime.NODEJS_16_X,
+      runtime: Runtime.NODEJS_20_X,
       environment: {
         TABLE_NAME: table.tableName,
       },

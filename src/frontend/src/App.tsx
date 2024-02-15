@@ -9,20 +9,13 @@ import TimeSeriesChart from './components/WeatherTimeSeries';
 
 function App() {
   return (
-    <>
-      <TrpcProvider apiBaseUrl={'/trpc'}>
-        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-          <h1>Weather App</h1>
-          <p>
-            <WeatherIngestion />
-          </p>
-          <p>
-            <TimeSeriesChart />
-          </p>
-        </LocalizationProvider>
-      </TrpcProvider>
-    </>
-
+    <TrpcProvider apiBaseUrl={'/trpc'}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
+        <h1>Weather App</h1>
+        <WeatherIngestion />
+        <TimeSeriesChart />
+      </LocalizationProvider>
+    </TrpcProvider>
   );
 }
 

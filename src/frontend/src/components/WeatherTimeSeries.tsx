@@ -71,7 +71,7 @@ const TimeSeriesChart: FC = () => {
   };
 
   return (
-    <>
+    <div>
       <h2>Results</h2>
       <BasicMenu items={Object.values(AverageType)} title='Average' setResponse={setAverageType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
@@ -80,7 +80,7 @@ const TimeSeriesChart: FC = () => {
               Show
       </Button>
       {!isLoading && <HighchartsReact highcharts={Highcharts} options={options} />}
-    </>);
+    </div>);
 };
 
 export default TimeSeriesChart;
