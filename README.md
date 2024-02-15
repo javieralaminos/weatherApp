@@ -53,3 +53,64 @@ If offers scalability and performance optimizations out of the box, ensuring con
 ## Installation and contributing
 
 All the instructions are placed in the CONTRIBUTING file
+
+## Project structure
+
+```
+.
+├── README.md
+├── backend
+│   ├── src
+│   │   ├── index.ts
+│   │   ├── server-stub.ts
+│   │   └── weather-service
+│   │       ├── adapters
+│   │       │   ├── driven
+│   │       │   │   ├── index.ts
+│   │       │   │   ├── weather-repository-dynamo-adapter.test.ts
+│   │       │   │   ├── weather-repository-dynamo-adapter.ts
+│   │       │   │   └── weather-repository-stub-adapter.ts
+│   │       │   └── driver
+│   │       │       ├── index.ts
+│   │       │       ├── trpc.ts
+│   │       │       ├── weather-ingestion-trpc-adapter.ts
+│   │       │       └── weather-server-trpc-adapter.ts
+│   │       ├── app
+│   │       │   ├── schemas.ts
+│   │       │   ├── models.ts
+│   │       │   ├── weatherService.test.ts
+│   │       │   └── weatherService.ts
+│   │       ├── composition-root.ts
+│   │       └── ports
+│   │           ├── driven
+│   │           │   └── for-quering-weather.ts
+│   │           └── driver
+│   │               ├── for-ingesting-weather.ts
+│   │               ├── for-serving-weather.ts
+│   └──             └── index.ts
+├── frontend
+│   ├── package.json
+│   ├── public
+│   │   ├── favicon.ico
+│   │   ├── index.html
+│   │   ├── manifest.json
+│   │   └── robots.txt
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── components
+│   │   │   ├── BasicMenu.tsx
+│   │   │   ├── BasicSelect.tsx
+│   │   │   ├── DateTimePicker.tsx
+│   │   │   ├── WeatherIgestion.tsx
+│   │   │   ├── WeatherTimeSeries.tsx
+│   │   │   ├── models.ts
+│   │   │   └── trpc.tsx
+│   │   ├── index.css
+│   │   ├── index.tsx
+│   └── tsconfig.json
+├── package.json
+├── src
+│   └── main.ts
+└── tsconfig.json
+```

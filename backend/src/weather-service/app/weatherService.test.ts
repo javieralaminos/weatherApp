@@ -1,4 +1,4 @@
-import { WeatherType } from './models';
+import { AverageType, WeatherType } from './models';
 import { GetTimeSeriesWeatherProps, SetWeatherProps } from './schemas';
 import { WeatherService } from './weatherService';
 import { WeatherRepositoryStubAdapter } from '../adapters/driven';
@@ -19,6 +19,7 @@ describe('WeatherService', () => {
         startDate: '2022-01-01T00:00:00Z',
         endDate: '2022-01-02T00:00:00Z',
         type: WeatherType.temperature,
+        averageType: AverageType.hourly,
       };
 
       // Call the getTimeSeries method of WeatherService
@@ -61,13 +62,14 @@ describe('WeatherService', () => {
         startDate: '2022-01-01T00:00:00Z',
         endDate: '2022-01-02T00:00:00Z',
         type: WeatherType.temperature,
+        averageType: AverageType.hourly,
       });
 
       // Verify the result
       expect(result).toEqual({
         timeSeries: [
           {
-            datetime: '2022-01-01T00:00:00Z',
+            datetime: '2022-01-01T00:00:00.000Z',
             value: 10,
             type: 'temperature',
           },
