@@ -3,7 +3,8 @@
 To get started with contributing, please follow these steps:
 
 1. Clone the repository on GitHub.
-2. Install the necessary dependencies by running `npx projen`.
+2. Install project dependecies `yarn install`
+3. Setup project `yarn projen`.
 
 ## Local deployment
 

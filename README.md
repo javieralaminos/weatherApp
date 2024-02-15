@@ -1,36 +1,39 @@
 # Weather App
 
-This README file provides an overview of the Weather App project. It explains the purpose of the application and the reasons behind the choice of technologies used, including Projen, Hexagonal Architecture, TypeScript, and DynamoDB.
+This README file provides an overview of the Weather App project. It explains the purpose of the application and the
+reasons behind the choice of technologies used, including Projen, Hexagonal Architecture, TypeScript, and DynamoDB.
 
 ## Project overview
 
-The project has 3 different subprojects, IAC, backend and frontend. The code it's distributed in 3 folders:
+The project has 3 different parts, two of which have their own setup:
 
-- src/main.ts -> IAC code
-- backend/src
-- frontend/src
+- Infrastructure as Code: this part is responsible for describing and provisioning the infrastructure necessary to run the application `./src/main.ts`
+- Backend: this is a TypeScript sub-project where the backend application lives. `./backend/src`
+- Frontend: another sub-project, this time for an SPA built with React. `./frontend/src`
 
 ### IAC
 
-All the infrastructure needed to set up the project, using CDK the code is easly deployed in any AWS account.
+This is where the infrastructure is defined. It uses AWS CDK to define the resources that the application needs to run.
+The most relevant resources are:
 
 - Lambda with API Gateway to serve the endpoints
 - Dynamodb to store the data
-- Cloudfront and S3 to serve the frontend code
+- S3 bucket to store the frontend code
+- CloudFront to work as a CDN for the frontend. It also provides SSL and proxies the API Gateway requests
 
 ### Backend
 
-It's developed following hexagonal architecture (Ports and adapters). There is only one service, weather-service, with 2 drivers for serving the requests and one driven to store the data.
+It's developed following hexagonal architecture (Ports and adapters). There is only one service, `weather-service`, with 2 drivers for serving the requests, one for serving data and another for ingesting data, and one driven to retrieve and store the data.
 
 This architecture allows to create new ports, new adapters and new services, decoupling the code. Some examples:
 
-- Adding a new driven port, for-fetching-data, that allows ingest data using and external website that serve the metrics. And a driver port to trigger a function that retrieve the data and store it
-- Add a new adapter, weather-repository-aurora-adapter, that allow changing the database without affecting the application bussines
-- Add a new service, news-service, users-service, notifications-service... bringing more functionalities to the API not related with the weather
+- You could add a new driven port, `for-fetching-data`, that allows ingest data using and external website that serve the metrics. And a driver port to trigger a function that retrieve the data and store it
+- Add a new adapter, `weather-repository-aurora-adapter`, that allow changing the database without affecting the application bussines
+- Add a new service, `news-service`, `users-service`, `notifications-service`... bringing more functionalities to the API not related with the weather
 
 ### Frontend
 
-This code utilizes the power of React to create interactive UI components, trpc to define and handle API requests and responses in a type-safe manner, and react-query to manage and cache data fetching from the API.
+This code utilizes React to create interactive UI components, trpc to define and handle API requests and responses in a type-safe manner, and react-query to manage and cache data fetching from the API.
 
 ## Technologies
 
@@ -46,7 +49,7 @@ Projen is a development tool that simplifies project setup and configuration. It
 
 There are some benefits on using the same language for the 3 projects. Mostly the posibility of sharing code and types. It provides better tooling, improved code quality, and enhanced developer productivity.
 
-### Why DynamoDB instead of SQL?
+### Why NoSQL instead of RDBMS?
 
 If offers scalability and performance optimizations out of the box, ensuring consistent performance regardless of data volume. With a pay-as-you-go pricing model, DynamoDB can be more cost-effective than maintaining and scaling a traditional SQL database for small-scale projects.
 
@@ -61,54 +64,24 @@ All the instructions are placed in the CONTRIBUTING file
 ├── README.md
 ├── backend
 │   ├── src
-│   │   ├── index.ts
-│   │   ├── server-stub.ts
 │   │   └── weather-service
 │   │       ├── adapters
 │   │       │   ├── driven
-│   │       │   │   ├── index.ts
-│   │       │   │   ├── weather-repository-dynamo-adapter.test.ts
-│   │       │   │   ├── weather-repository-dynamo-adapter.ts
-│   │       │   │   └── weather-repository-stub-adapter.ts
 │   │       │   └── driver
-│   │       │       ├── index.ts
-│   │       │       ├── trpc.ts
-│   │       │       ├── weather-ingestion-trpc-adapter.ts
-│   │       │       └── weather-server-trpc-adapter.ts
 │   │       ├── app
 │   │       │   ├── schemas.ts
 │   │       │   ├── models.ts
-│   │       │   ├── weatherService.test.ts
 │   │       │   └── weatherService.ts
 │   │       ├── composition-root.ts
 │   │       └── ports
 │   │           ├── driven
-│   │           │   └── for-quering-weather.ts
 │   │           └── driver
-│   │               ├── for-ingesting-weather.ts
-│   │               ├── for-serving-weather.ts
-│   └──             └── index.ts
 ├── frontend
 │   ├── package.json
 │   ├── public
-│   │   ├── favicon.ico
-│   │   ├── index.html
-│   │   ├── manifest.json
-│   │   └── robots.txt
 │   ├── src
-│   │   ├── App.css
 │   │   ├── App.tsx
 │   │   ├── components
-│   │   │   ├── BasicMenu.tsx
-│   │   │   ├── BasicSelect.tsx
-│   │   │   ├── DateTimePicker.tsx
-│   │   │   ├── WeatherIgestion.tsx
-│   │   │   ├── WeatherTimeSeries.tsx
-│   │   │   ├── models.ts
-│   │   │   └── trpc.tsx
-│   │   ├── index.css
-│   │   ├── index.tsx
-│   └── tsconfig.json
 ├── package.json
 ├── src
 │   └── main.ts

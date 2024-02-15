@@ -13,9 +13,20 @@ function App() {
   return (
     <TrpcProvider apiBaseUrl={ApiEndpoint}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
-        <h1>Weather App</h1>
-        <WeatherIngestion />
-        <TimeSeriesChart />
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          height: '100vh',
+          flexDirection: 'column',
+          justifyItems: 'center',
+          alignItems: 'center',
+          justifyContent: 'center',
+          margin: '20px',
+        }}>
+          <h1>Weather App</h1>
+          <WeatherIngestion />
+          <TimeSeriesChart />
+        </div>
       </LocalizationProvider>
     </TrpcProvider>
   );

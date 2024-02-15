@@ -2,15 +2,15 @@
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 export interface BasicDateTimePickerProps {
-  selectedDate: Date | null;
-  setSelectedDate: (date: Date | null) => void;
+  selectedDate: Date;
+  setSelectedDate: (date: Date) => void;
 }
 
 const BasicDateTimePicker = (props: BasicDateTimePickerProps) => {
   const { selectedDate, setSelectedDate } = props;
 
   const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date);
+    if (date) {setSelectedDate(date);}
   };
 
 

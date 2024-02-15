@@ -7,13 +7,13 @@ import { WeatherType } from './models';
 import { trpc } from './trpc';
 
 const WeatherIngestion: FunctionComponent = () => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [weatherValue, setWeatherValue] = useState<number | null>(null);
-  const [weatherType, setWeatherType] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [weatherValue, setWeatherValue] = useState<number | undefined>();
+  const [weatherType, setWeatherType] = useState<string>(WeatherType.temperature);
   const { mutateAsync } = trpc.setWeather.useMutation();
 
   const handleIngestion = async () => {
-    if (selectedDate && weatherValue && weatherType) {
+    if (weatherValue) {
       await mutateAsync({
         datetime: selectedDate.toISOString(),
         value: weatherValue,
@@ -23,8 +23,8 @@ const WeatherIngestion: FunctionComponent = () => {
   };
 
   return (
-    <div>
-      <h2>Weather Ingestion</h2>
+    <div style={ { minWidth: '800px' }}>
+      <h2>Data Ingestion</h2>
       <BasicSelect values={Object.values(WeatherType)} title='Type' setResponse={setWeatherType} />
       <BasicDateTimePicker selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       <TextField

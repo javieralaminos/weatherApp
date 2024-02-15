@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import BasicSelect from './BasicSelect';
 import BasicDateTimePicker from './DateTimePicker';
 import { AverageType, WeatherType } from './models';
@@ -14,14 +14,21 @@ interface TimeSeriesDataResponse {
 }
 
 const TimeSeriesChart: FC = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [averageType, setAverageType] = useState<string | null>(null);
+  const currentDate = new Date();
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  const [startDate, setStartDate] = useState<Date>(currentDate);
+  const [endDate, setEndDate] = useState<Date>(new Date());
+  const [averageType, setAverageType] = useState<string>(AverageType.daily);
   const [data, setData] = useState<TimeSeriesDataResponse>({ temperature: [], humidity: [], pressure: [] });
-  const { mutateAsync, isLoading } = trpc.getTimeSeries.useMutation();
+  const { mutateAsync } = trpc.getTimeSeries.useMutation();
+
+  useEffect
+  (() => {
+    void handleQuery();
+  }, []);
 
   const handleQuery = async () => {
-    if (startDate && endDate && averageType) {
+    if (averageType) {
       const props = {
         startDate: startDate.toISOString(),
         endDate: endDate.toISOString(),
@@ -71,7 +78,7 @@ const TimeSeriesChart: FC = () => {
   };
 
   return (
-    <div>
+    <div style={ { minWidth: '800px' }}>
       <h2>Results</h2>
       <BasicSelect values={Object.values(AverageType)} title='Average' setResponse={setAverageType} />
       <BasicDateTimePicker selectedDate={startDate} setSelectedDate={setStartDate} />
@@ -79,7 +86,7 @@ const TimeSeriesChart: FC = () => {
       <Button variant="contained" onClick={handleQuery} disabled={!startDate || !endDate || !averageType}>
               Show
       </Button>
-      {!isLoading && <HighchartsReact highcharts={Highcharts} options={options} />}
+      {<HighchartsReact highcharts={Highcharts} options={options} />}
     </div>);
 };
 

@@ -4,11 +4,11 @@ import { Dispatch, SetStateAction, useState } from 'react';
 export interface BasicSelectProps {
   title: string;
   values: string[];
-  setResponse: Dispatch<SetStateAction<string | null>>;
+  setResponse: Dispatch<SetStateAction<string>>;
 }
 
 export default function BasicSelect(props: BasicSelectProps) {
-  const [averageType, setAverageType] = useState<string>('');
+  const [averageType, setAverageType] = useState<string>(props.values[0]);
 
 
   const handleChange = (event: SelectChangeEvent) => {
