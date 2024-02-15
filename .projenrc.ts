@@ -48,7 +48,6 @@ const frontend = new ReactTypeScriptProject({
     '@mui/icons-material',
     '@mui/material',
     '@mui/x-date-pickers',
-    '@mui/x-date-pickers/AdapterDayjs',
     'eslint-plugin-react-hooks',
     'highcharts',
     'highcharts-react-official',
