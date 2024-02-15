@@ -1,11 +1,16 @@
+import { AverageType } from './models';
 import { GetTimeSeriesWeatherProps, TimeSeriesResponse, SetWeatherProps } from './schemas';
-import { AverageType } from '../../models';
 import { ForQueringWeather, MetricResponse } from '../ports/driven/for-quering-weather';
 import { ForServingWeather, ForIngestingWeather } from '../ports/driver';
 
 export class WeatherService implements ForServingWeather, ForIngestingWeather {
   constructor(private forManagingWeather: ForQueringWeather) {
   }
+
+  public async setWeather(props: SetWeatherProps): Promise<void> {
+    return this.forManagingWeather.setWeatherMetric(props);
+  }
+
   public async getTimeSeries(props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
     const timeSeries = await this.forManagingWeather.getWeatherMetrics(props);
     const sortedResponse = timeSeries.sort((a, b) => a.datetime.localeCompare(b.datetime));
@@ -48,7 +53,4 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
     }
   }
 
-  public async setWeather(props: SetWeatherProps): Promise<void> {
-    return this.forManagingWeather.setWeatherMetric(props);
-  }
 }

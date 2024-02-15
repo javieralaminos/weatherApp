@@ -7,9 +7,11 @@ import TrpcProvider from './components/trpc';
 import WeatherIngestion from './components/WeatherIgestion';
 import TimeSeriesChart from './components/WeatherTimeSeries';
 
+const ApiEndpoint = '/trpc'; // API Gateway endpoint for local development change to http://localhost:4000/trpc
+
 function App() {
   return (
-    <TrpcProvider apiBaseUrl={'/trpc'}>
+    <TrpcProvider apiBaseUrl={ApiEndpoint}>
       <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={enGB}>
         <h1>Weather App</h1>
         <WeatherIngestion />

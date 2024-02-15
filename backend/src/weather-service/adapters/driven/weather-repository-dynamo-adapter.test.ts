@@ -1,5 +1,5 @@
 import { WeatherRepositoryDynamoAdapter } from './weather-repository-dynamo-adapter';
-import { WeatherType } from '../../../models';
+import { WeatherType } from '../../app/models';
 
 describe('WeatherRepositoryDynamoAdapter', () => {
   let weatherRepository: WeatherRepositoryDynamoAdapter;

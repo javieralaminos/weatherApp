@@ -1,6 +1,6 @@
+import { WeatherType } from './models';
 import { GetTimeSeriesWeatherProps, SetWeatherProps } from './schemas';
 import { WeatherService } from './weatherService';
-import { WeatherType } from '../../models';
 import { WeatherRepositoryStubAdapter } from '../adapters/driven';
 
 describe('WeatherService', () => {

@@ -1,4 +1,4 @@
-import { WeatherType } from '../../../models';
+import { WeatherType } from '../../app/models';
 
 export interface GetWeatherMetricsProps {
   startDate: string;

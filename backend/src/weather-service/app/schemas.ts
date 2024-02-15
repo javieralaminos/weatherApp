@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { AverageType, WeatherType } from '../../models';
+import { AverageType, WeatherType } from './models';
 
 export const GetTimeSeriesWeatherPropsSchema = z.object({
   startDate: z.string().datetime(),

@@ -1,6 +1,6 @@
 import { assert } from 'console';
 import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
-import { WeatherType } from '../../../models';
+import { WeatherType } from '../../app/models';
 import { ForQueringWeather, GetWeatherMetricsProps, MetricResponse, SetWeatherMetricProps } from '../../ports/driven/for-quering-weather';
 
 export class WeatherRepositoryDynamoAdapter implements ForQueringWeather {
