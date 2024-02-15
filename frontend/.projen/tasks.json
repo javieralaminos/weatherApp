@@ -26,7 +26,7 @@
       "description": "Only compile",
       "steps": [
         {
-          "exec": "tsc --build"
+          "exec": "react-scripts build"
         }
       ]
     },
@@ -36,7 +36,16 @@
       "steps": [
         {
           "exec": "npx projen default",
-          "cwd": "../.."
+          "cwd": ".."
+        }
+      ]
+    },
+    "dev": {
+      "name": "dev",
+      "description": "Starts the react application",
+      "steps": [
+        {
+          "exec": "react-scripts start"
         }
       ]
     },
@@ -89,20 +98,10 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --updateSnapshot",
-          "receiveArgs": true
+          "spawn": "eslint"
         },
         {
-          "spawn": "eslint"
-        }
-      ]
-    },
-    "test:watch": {
-      "name": "test:watch",
-      "description": "Run jest in watch mode",
-      "steps": [
-        {
-          "exec": "jest --watch"
+          "exec": "react-scripts test --watchAll=false"
         }
       ]
     },
@@ -114,13 +113,13 @@
       },
       "steps": [
         {
-          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@types/aws-lambda,@types/jest,eslint-import-resolver-typescript,eslint-plugin-import,jest,projen,ts-jest,typescript,@aws-sdk/client-dynamodb,@trpc/server,@types/express,cors,express,zod"
+          "exec": "npx npm-check-updates@16 --upgrade --target=minor --peer --dep=dev,peer,prod,optional --filter=@testing-library/jest-dom,@testing-library/react,@testing-library/user-event,@types/jest,@types/react,@types/react-dom,eslint-import-resolver-typescript,eslint-plugin-import,projen,@emotion/react,@emotion/styled,@mui/icons-material,@mui/material,@mui/x-date-pickers,@tanstack/react-query,@trpc/client,@trpc/react-query,@weatherApp/backend,date-fns,eslint-plugin-react-hooks,highcharts,highcharts-react-official,highcharts-rounded-corners,node-fetch,react,react-dom,web-vitals,zod"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/aws-lambda @types/jest @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit projen ts-jest typescript @aws-sdk/client-dynamodb @trpc/server @types/express cors express zod"
+          "exec": "yarn upgrade @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest @types/node @types/react @types/react-dom @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-typescript eslint-plugin-import eslint projen typescript @emotion/react @emotion/styled @mui/icons-material @mui/material @mui/x-date-pickers @tanstack/react-query @trpc/client @trpc/react-query @weatherApp/backend date-fns eslint-plugin-react-hooks highcharts highcharts-react-official highcharts-rounded-corners node-fetch react react-dom react-scripts web-vitals zod"
         },
         {
           "exec": "npx projen"

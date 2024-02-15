@@ -23,7 +23,7 @@ export class MyStack extends Stack {
     });
     // Create the Lambda function
     const lambdaFunction = new NodejsFunction(this, 'weatherLambda', {
-      entry: require.resolve('./backend/src/index'),
+      entry: require.resolve('../backend/src/index'),
       runtime: Runtime.NODEJS_20_X,
       environment: {
         TABLE_NAME: table.tableName,
@@ -49,7 +49,7 @@ export class MyStack extends Stack {
       defaultRootObject: 'index.html',
     });
     new BucketDeployment(this, 'DeployWithInvalidation', {
-      sources: [Source.asset(path.join(__dirname, 'frontend/build'))],
+      sources: [Source.asset(path.join(__dirname, '../frontend/build'))],
       destinationBucket: websiteBucket,
       distribution,
     });

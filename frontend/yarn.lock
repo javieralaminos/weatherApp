@@ -89,16 +89,16 @@
     "@aws-sdk/util-utf8-browser" "^3.0.0"
     tslib "^1.11.1"
 
-"@aws-sdk/client-dynamodb@^3.513.0":
-  version "3.513.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.513.0.tgz#3c73dfe84831210a9a21053da5e55af1ee78041f"
-  integrity sha512-eFxUy44IiKD2GypjqvwclAFnQIJzVMzBTitNfeOGrdwnDIPjhL44PXLf27Yb8At3r9s5m8d/NgItg0rmR7W05w==
+"@aws-sdk/client-dynamodb@^3.514.0":
+  version "3.514.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/client-dynamodb/-/client-dynamodb-3.514.0.tgz#f0067bc4d1e2503d2fa24ff839ec85c0fe5cd420"
+  integrity sha512-JdaKlx2vIzXmtRKDwKnXy0Jfl6EJp9zzYNS5EBtyqpg0ifqPw/sMMzLWfAD/KQMeIs4YjwmdbeNYymKnxBdtCQ==
   dependencies:
     "@aws-crypto/sha256-browser" "3.0.0"
     "@aws-crypto/sha256-js" "3.0.0"
     "@aws-sdk/client-sts" "3.513.0"
     "@aws-sdk/core" "3.513.0"
-    "@aws-sdk/credential-provider-node" "3.513.0"
+    "@aws-sdk/credential-provider-node" "3.514.0"
     "@aws-sdk/middleware-endpoint-discovery" "3.511.0"
     "@aws-sdk/middleware-host-header" "3.511.0"
     "@aws-sdk/middleware-logger" "3.511.0"
@@ -326,10 +326,10 @@
     "@smithy/types" "^2.9.1"
     tslib "^2.5.0"
 
-"@aws-sdk/credential-provider-node@3.513.0":
-  version "3.513.0"
-  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-node/-/credential-provider-node-3.513.0.tgz#7ce79ce6faea1850fb8992bb86e79e5f5e6f4e9c"
-  integrity sha512-Cp6tYUJ+g8zJxI8vE0A9W6AxRLq3iR2zGGKsrPLNmZkUaHoVaJiNEd+2nL9RwCqDRve+N+Sh3mbZrLiqh3DO6A==
+"@aws-sdk/credential-provider-node@3.514.0":
+  version "3.514.0"
+  resolved "https://registry.yarnpkg.com/@aws-sdk/credential-provider-node/-/credential-provider-node-3.514.0.tgz#b7149b3b8850c1ee3d50b185ac24c0a517c85123"
+  integrity sha512-z6HYiJN5+WO4Obnu36pIKnWkt1cVb3/3QeqE0lwF6cwLVHv1DCTV6OAWlQO5Q9EO9VcsmZU3aIH7MyGrhvYuHg==
   dependencies:
     "@aws-sdk/credential-provider-env" "3.511.0"
     "@aws-sdk/credential-provider-http" "3.511.0"
@@ -2214,9 +2214,9 @@
     "@jridgewell/trace-mapping" "^0.3.9"
 
 "@jridgewell/resolve-uri@^3.1.0":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.1.tgz#c08679063f279615a3326583ba3a90d1d82cc721"
-  integrity sha512-dSYZh7HhCDtCKm4QakX0xFpsRDqjjtZf/kjI/v3T3Nwt5r8/qz/M19F9ySyOqU94SXBmeG9ttTul+YnR4LOxFA==
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz#7a0ee601f60f99a20c7c7c5ff0c80388c1189bd6"
+  integrity sha512-bRISgCIjP20/tbWSPWMEi54QVPRZExkuD9lJL+UIxUKtwVJA8wW1Trb1jMs1RFXo1CBTNZ/5hpC9QvmKWdopKw==
 
 "@jridgewell/set-array@^1.0.1":
   version "1.1.2"
@@ -4335,12 +4335,12 @@ browser-process-hrtime@^1.0.0:
   integrity sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==
 
 browserslist@^4.0.0, browserslist@^4.18.1, browserslist@^4.21.10, browserslist@^4.21.4, browserslist@^4.22.2, browserslist@^4.22.3:
-  version "4.22.3"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.22.3.tgz#299d11b7e947a6b843981392721169e27d60c5a6"
-  integrity sha512-UAp55yfwNv0klWNapjs/ktHoguxuQNGnOzxYmfnXIS+8AsRDZkSDxg7R1AX3GKzn078SBI5dzwzj/Yx0Or0e3A==
+  version "4.23.0"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.23.0.tgz#8f3acc2bbe73af7213399430890f86c63a5674ab"
+  integrity sha512-QW8HiM1shhT2GuzkvklfjcKDiWFXHOeFCIA/huJPwHsslwcydgk7X+z2zXpEijP98UCY7HbubZt5J2Zgvf0CaQ==
   dependencies:
-    caniuse-lite "^1.0.30001580"
-    electron-to-chromium "^1.4.648"
+    caniuse-lite "^1.0.30001587"
+    electron-to-chromium "^1.4.668"
     node-releases "^2.0.14"
     update-browserslist-db "^1.0.13"
 
@@ -4420,7 +4420,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001578, caniuse-lite@^1.0.30001580:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001578, caniuse-lite@^1.0.30001587:
   version "1.0.30001587"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001587.tgz#a0bce920155fa56a1885a69c74e1163fc34b4881"
   integrity sha512-HMFNotUmLXn71BQxg8cijvqxnIAofforZOwGsxyXJ0qugTdspUF4sPSJ2vhgprHCB996tIDzEq1ubumPDV8ULA==
@@ -5312,10 +5312,10 @@ ejs@^3.1.6:
   dependencies:
     jake "^10.8.5"
 
-electron-to-chromium@^1.4.648:
-  version "1.4.668"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.668.tgz#5cfed14f3240cdc70a359a49790cb295b1f097f1"
-  integrity sha512-ZOBocMYCehr9W31+GpMclR+KBaDZOoAEabLdhpZ8oU1JFDwIaFY0UDbpXVEUFc0BIP2O2Qn3rkfCjQmMR4T/bQ==
+electron-to-chromium@^1.4.668:
+  version "1.4.670"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.670.tgz#0fc5ac92ada8371e898ea72d577ffc888167a017"
+  integrity sha512-hcijYOWjOtjKrKPtNA6tuLlA/bTLO3heFG8pQA6mLpq7dRydSWicXova5lyxDzp1iVJaYhK7J2OQlGE52KYn7A==
 
 emittery@^0.10.2:
   version "0.10.2"
@@ -7813,9 +7813,9 @@ lilconfig@^2.0.3, lilconfig@^2.1.0:
   integrity sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==
 
 lilconfig@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-3.0.0.tgz#f8067feb033b5b74dab4602a5f5029420be749bc"
-  integrity sha512-K2U4W2Ff5ibV7j7ydLr+zLAkIg5JJ4lPn1Ltsdt+Tz/IjQ8buJ55pZAxoP34lqIiwtF9iAvtLv3JGv7CAyAg+g==
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-3.1.0.tgz#aabf03fd46934d0566d75b4b64ce41a2cdea1167"
+  integrity sha512-p3cz0JV5vw/XeouBU3Ldnp+ZkBjE+n8ydJ4mcwBrOiXXPqNlrzGBqWs9X4MWF7f+iKUBu794Y8Hh8yawiJbCjw==
 
 lines-and-columns@^1.1.6:
   version "1.2.4"
@@ -9179,7 +9179,7 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-projen@^0.79.19:
+projen@^0.79.21:
   version "0.79.21"
   resolved "https://registry.yarnpkg.com/projen/-/projen-0.79.21.tgz#8c0f769d2f8052f9dce95ddf9209ec5d7bccda2e"
   integrity sha512-q1tdKuFMW9dIuPU27PqHs5iVAWWQ+9BCbLjihfnEkaCaPMl7F8k//+d7DpJcZhghMiYLcmBdr3N8jKVtw8iDeQ==

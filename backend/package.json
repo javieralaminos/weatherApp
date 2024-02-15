@@ -38,7 +38,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.513.0",
+    "@aws-sdk/client-dynamodb": "^3.514.0",
     "@trpc/server": "10.45.0",
     "@types/express": "^4.17.21",
     "cors": "^2.8.5",

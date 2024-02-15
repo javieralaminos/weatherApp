@@ -12,7 +12,7 @@ const COMMON_PROJEN_SETTINGS = {
   eslint: true,
 };
 
-const main = new AwsCdkTypeScriptApp({
+const iac = new AwsCdkTypeScriptApp({
   ...COMMON_PROJEN_SETTINGS,
   cdkVersion: '2.1.0',
   name: 'weatherApp',
@@ -28,8 +28,8 @@ const TRPC_VERSION = '10.45.0';
 const backend = new TypeScriptAppProject({
   ...COMMON_PROJEN_SETTINGS,
   name: 'backend',
-  parent: main,
-  outdir: 'src/backend',
+  parent: iac,
+  outdir: 'backend',
   release: false,
   buildWorkflow: false,
   deps: [`@trpc/server@${TRPC_VERSION}`, 'zod', '@aws-sdk/client-dynamodb', 'cors', 'express', '@types/express'],
@@ -38,8 +38,8 @@ const backend = new TypeScriptAppProject({
 const frontend = new ReactTypeScriptProject({
   ...COMMON_PROJEN_SETTINGS,
   name: 'frontend',
-  parent: main,
-  outdir: 'src/frontend',
+  parent: iac,
+  outdir: 'frontend',
   release: false,
   buildWorkflow: false,
   deps: [
@@ -61,4 +61,4 @@ const frontend = new ReactTypeScriptProject({
   ],
 });
 frontend.addDeps(`@weatherApp/backend@link:${path.relative(frontend.outdir, backend.outdir)}`);
-main.synth();
+iac.synth();
