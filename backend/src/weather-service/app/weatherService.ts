@@ -1,5 +1,6 @@
 import { GetTimeSeriesWeatherProps, TimeSeriesResponse, SetWeatherProps } from './schemas';
-import { ForQueringWeather } from '../ports/driven/for-quering-weather';
+import { AverageType } from '../../models';
+import { ForQueringWeather, MetricResponse } from '../ports/driven/for-quering-weather';
 import { ForServingWeather, ForIngestingWeather } from '../ports/driver';
 
 export class WeatherService implements ForServingWeather, ForIngestingWeather {
@@ -8,8 +9,12 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
   public async getTimeSeries(props: GetTimeSeriesWeatherProps): Promise<TimeSeriesResponse> {
     const timeSeries = await this.forManagingWeather.getWeatherMetrics(props);
     const sortedResponse = timeSeries.sort((a, b) => a.datetime.localeCompare(b.datetime));
-    if (props.averageType === 'hourly') {
-      const hourlyTimeSeries = sortedResponse.reduce((acc, curr) => {
+    return this.aggregateTimeSeriesPerAverage(sortedResponse, props.averageType);
+  }
+
+  private aggregateTimeSeriesPerAverage(timeSeries: MetricResponse[], averageType: AverageType): TimeSeriesResponse {
+    if (averageType === 'hourly') {
+      const hourlyTimeSeries = timeSeries.reduce((acc, curr) => {
         const key = curr.datetime.slice(0, 13) + ':00:00.000Z';
         if (acc[key]) {
           acc[key].push(curr);
@@ -17,15 +22,14 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
           acc[key] = [curr];
         }
         return acc;
-      }, {} as Record<string, typeof sortedResponse>);
+      }, {} as Record<string, typeof timeSeries>);
       const hourlyAverages = Object.keys(hourlyTimeSeries).map((key) => {
         const average = hourlyTimeSeries[key].reduce((acc, curr) => acc + curr.value, 0) / hourlyTimeSeries[key].length;
-        return { datetime: key, value: average, type: props.type };
+        return { datetime: key, value: average, type: timeSeries[0].type };
       });
-      console.log(hourlyAverages);
       return { timeSeries: hourlyAverages };
-    } else if (props.averageType === 'daily') {
-      const dailyTimeSeries = sortedResponse.reduce((acc, curr) => {
+    } else if (averageType === 'daily') {
+      const dailyTimeSeries = timeSeries.reduce((acc, curr) => {
         const key = curr.datetime.slice(0, 10) + 'T00:00:00.000Z';
         if (acc[key]) {
           acc[key].push(curr);
@@ -33,17 +37,17 @@ export class WeatherService implements ForServingWeather, ForIngestingWeather {
           acc[key] = [curr];
         }
         return acc;
-      }, {} as Record<string, typeof sortedResponse>);
+      }, {} as Record<string, typeof timeSeries>);
       const dailyAverages = Object.keys(dailyTimeSeries).map((key) => {
         const average = dailyTimeSeries[key].reduce((acc, curr) => acc + curr.value, 0) / dailyTimeSeries[key].length;
-        return { datetime: key, value: average, type: props.type };
+        return { datetime: key, value: average, type: timeSeries[0].type };
       });
-      console.log(dailyAverages);
       return { timeSeries: dailyAverages };
     } else {
-      return { timeSeries: sortedResponse };
+      return { timeSeries };
     }
   }
+
   public async setWeather(props: SetWeatherProps): Promise<void> {
     return this.forManagingWeather.setWeatherMetric(props);
   }
