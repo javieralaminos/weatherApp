@@ -7,14 +7,13 @@ To get started with contributing, please follow these steps:
 
 ## Local deployment
 
-1. Change the endpoint in App.tsx to point to http://localhost:4000/trpc (Line 10)
-2. Start the backend server
+1. Start the backend server
 
 ```
 tsx backend/src/server-stub.ts
 ```
 
-3. Start the frontend, in the front end folder:
+2. Start the frontend, in the frontend folder:
 
 ```
 cd frontend

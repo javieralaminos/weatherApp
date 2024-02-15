@@ -7,7 +7,7 @@ import TrpcProvider from './components/trpc';
 import WeatherIngestion from './components/WeatherIgestion';
 import TimeSeriesChart from './components/WeatherTimeSeries';
 
-const ApiEndpoint = '/trpc'; // API Gateway endpoint for local development change to http://localhost:4000/trpc
+const ApiEndpoint = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/trpc' : '/trpc';
 
 function App() {
   return (
